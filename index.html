@@ -1,0 +1,2107 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark light">
+<meta name="description" content="A curated, deduped atlas of 90 high-utility skills across the top 10 Claude Code and Agent Zero skill repositories, with detailed use cases for each.">
+<meta property="og:title" content="The Skills Atlas">
+<meta property="og:description" content="90 skills, 270 use cases, 10 repos. Zero redundancy.">
+<title>The Skills Atlas: 90 skills, 270 use cases, zero redundancy</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b0d12'/%3E%3Crect x='12' y='14' width='40' height='6' rx='3' fill='%23a78bfa'/%3E%3Crect x='12' y='26' width='28' height='6' rx='3' fill='%2367e8f9'/%3E%3Crect x='12' y='38' width='34' height='6' rx='3' fill='%23a78bfa'/%3E%3Crect x='12' y='50' width='22' height='6' rx='3' fill='%2367e8f9'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --bg: #0a0b10;
+    --bg-raised: #11131b;
+    --bg-card: #151823;
+    --bg-card-hover: #1a1e2c;
+    --bg-inner: #10131c;
+    --border: #232838;
+    --border-strong: #2f3547;
+    --text: #e7e9ef;
+    --text-muted: #9aa1b2;
+    --text-dim: #6b7284;
+    --accent: #a78bfa;
+    --accent-2: #67e8f9;
+    --accent-soft: rgba(167, 139, 250, 0.12);
+    --accent-ring: rgba(167, 139, 250, 0.35);
+    --shadow-card: 0 1px 0 rgba(255,255,255,0.04) inset, 0 8px 24px rgba(0,0,0,0.25);
+    --shadow-pop: 0 1px 0 rgba(255,255,255,0.06) inset, 0 20px 48px rgba(0,0,0,0.45);
+    --max-w: 1180px;
+    --gap: 18px;
+    --radius: 14px;
+    --radius-sm: 10px;
+    --t-fast: 140ms;
+    --t-med: 260ms;
+    --ease: cubic-bezier(.2,.7,.2,1);
+    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-feature-settings: "ss01", "cv11", "tnum";
+  }
+  [data-theme="light"] {
+    --bg: #f7f8fb;
+    --bg-raised: #ffffff;
+    --bg-card: #ffffff;
+    --bg-card-hover: #fbfbfe;
+    --bg-inner: #f2f3f8;
+    --border: #e6e8ef;
+    --border-strong: #d4d8e2;
+    --text: #0d1020;
+    --text-muted: #4b5162;
+    --text-dim: #7a8091;
+    --accent: #6d4bff;
+    --accent-2: #0891b2;
+    --accent-soft: rgba(109, 75, 255, 0.08);
+    --accent-ring: rgba(109, 75, 255, 0.32);
+    --shadow-card: 0 1px 0 rgba(0,0,0,0.02) inset, 0 1px 2px rgba(10,15,40,0.04), 0 6px 18px rgba(10,15,40,0.06);
+    --shadow-pop: 0 1px 0 rgba(0,0,0,0.02) inset, 0 10px 30px rgba(10,15,40,0.12);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: 92px; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { transition-duration: 0.001ms !important; animation-duration: 0.001ms !important; }
+  }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    min-height: 100vh;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(900px 500px at 85% -10%, color-mix(in oklab, var(--accent) 14%, transparent), transparent 60%),
+      radial-gradient(700px 400px at -10% 10%, color-mix(in oklab, var(--accent-2) 12%, transparent), transparent 55%);
+    z-index: 0;
+  }
+  .skip-link {
+    position: absolute;
+    left: 12px;
+    top: -60px;
+    background: var(--accent);
+    color: #0a0b10;
+    padding: 8px 14px;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    text-decoration: none;
+    z-index: 100;
+    transition: top var(--t-fast) var(--ease);
+  }
+  .skip-link:focus { top: 12px; outline: 2px solid var(--accent-ring); outline-offset: 2px; }
+
+  a { color: var(--accent-2); text-decoration: none; }
+  a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  a:focus-visible, button:focus-visible, input:focus-visible {
+    outline: 2px solid var(--accent-ring);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    backdrop-filter: saturate(140%) blur(14px);
+    -webkit-backdrop-filter: saturate(140%) blur(14px);
+    background: color-mix(in oklab, var(--bg) 78%, transparent);
+    border-bottom: 1px solid var(--border);
+  }
+  .topbar-inner {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
+  .brand-mark {
+    width: 34px; height: 34px; flex: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    display: grid; place-items: center;
+    box-shadow: 0 6px 18px color-mix(in oklab, var(--accent) 30%, transparent);
+  }
+  .brand-mark svg { width: 20px; height: 20px; }
+  .brand-text { display: flex; flex-direction: column; min-width: 0; }
+  .brand-name { font-weight: 700; letter-spacing: -0.01em; }
+  .brand-sub { font-size: 12px; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  .controls { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+
+  .search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 8px 12px;
+    border-radius: 999px;
+    transition: border-color var(--t-fast) var(--ease), background var(--t-fast) var(--ease);
+    min-width: 240px;
+  }
+  .search:hover { border-color: var(--border-strong); }
+  .search:focus-within { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-ring); }
+  .search svg { width: 14px; height: 14px; color: var(--text-dim); flex: none; }
+  .search input {
+    background: none; border: 0; outline: 0;
+    color: var(--text); font: inherit; font-size: 14px;
+    width: 100%; min-width: 0;
+  }
+  .search input::placeholder { color: var(--text-dim); }
+  kbd {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 11px;
+    padding: 2px 6px;
+    border: 1px solid var(--border-strong);
+    border-radius: 4px;
+    color: var(--text-dim);
+    background: var(--bg);
+  }
+
+  .icon-btn {
+    width: 36px; height: 36px; flex: none;
+    display: grid; place-items: center;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    cursor: pointer;
+    transition: background var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease), transform var(--t-fast) var(--ease);
+  }
+  .icon-btn:hover { background: var(--bg-card-hover); border-color: var(--border-strong); }
+  .icon-btn:active { transform: scale(0.97); }
+  .icon-btn svg { width: 16px; height: 16px; }
+
+  main { position: relative; z-index: 1; }
+  .container { max-width: var(--max-w); margin: 0 auto; padding: 0 20px; }
+  .hero {
+    padding: 72px 0 32px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-soft);
+    border: 1px solid color-mix(in oklab, var(--accent) 22%, transparent);
+    padding: 6px 10px;
+    border-radius: 999px;
+  }
+  .eyebrow::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 30%, transparent); }
+  h1.title {
+    font-size: clamp(32px, 5.4vw, 58px);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    margin: 22px auto 18px;
+    font-weight: 800;
+    max-width: 16ch;
+    text-wrap: balance;
+    -webkit-text-wrap: balance;
+    background: linear-gradient(180deg, var(--text) 30%, color-mix(in oklab, var(--text) 55%, var(--accent)));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  h1.title .title-accent {
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    display: inline-block;
+  }
+  .lede { max-width: 640px; color: var(--text-muted); font-size: 17px; margin: 0 auto 22px; text-wrap: pretty; -webkit-text-wrap: pretty; }
+  .stats { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px auto 10px; padding: 0; list-style: none; justify-content: center; }
+  .stats div {
+    display: flex; align-items: baseline; gap: 8px;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 10px 14px;
+    box-shadow: var(--shadow-card);
+  }
+  .stats dt { font-size: 12px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.06em; margin: 0; }
+  .stats dd { margin: 0; font-weight: 700; font-variant-numeric: tabular-nums; font-size: 18px; }
+  .note { color: var(--text-dim); font-size: 13px; max-width: 760px; margin-left: auto; margin-right: auto; text-wrap: pretty; -webkit-text-wrap: pretty; }
+
+  .repo-nav {
+    position: sticky; top: 59px; z-index: 20;
+    background: color-mix(in oklab, var(--bg) 80%, transparent);
+    backdrop-filter: saturate(140%) blur(12px);
+    -webkit-backdrop-filter: saturate(140%) blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 0;
+    margin-top: 18px;
+  }
+  .repo-nav-inner {
+    max-width: var(--max-w); margin: 0 auto; padding: 0 20px;
+    display: flex; gap: 8px; overflow-x: auto;
+    scrollbar-width: thin;
+  }
+  .repo-nav-inner::-webkit-scrollbar { height: 6px; }
+  .repo-nav-inner::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
+  .chip {
+    flex: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: color var(--t-fast) var(--ease), background var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease);
+    white-space: nowrap;
+  }
+  .chip:hover { color: var(--text); background: var(--bg-card-hover); border-color: var(--border-strong); text-decoration: none; }
+  .chip[aria-current="true"] {
+    color: var(--text);
+    background: var(--accent-soft);
+    border-color: color-mix(in oklab, var(--accent) 35%, transparent);
+  }
+  .chip .count { color: var(--text-dim); font-variant-numeric: tabular-nums; }
+  .chip[aria-current="true"] .count { color: var(--accent); }
+
+  .repo { padding: 32px 0 8px; scroll-margin-top: 110px; }
+  .repo-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 6px; }
+  .repo-title { display: flex; align-items: center; gap: 12px; min-width: 0; flex-wrap: wrap; }
+  .repo-title h2 {
+    margin: 0;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: clamp(18px, 2.3vw, 22px);
+    letter-spacing: -0.01em;
+    color: var(--text);
+    word-break: break-word;
+  }
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 9px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text-muted);
+  }
+  .badge.stars { color: var(--accent); border-color: color-mix(in oklab, var(--accent) 30%, transparent); background: var(--accent-soft); }
+  .badge.canonical { color: var(--accent-2); border-color: color-mix(in oklab, var(--accent-2) 30%, transparent); }
+  .repo-actions { display: flex; gap: 8px; align-items: center; }
+  .repo-link { font-size: 13px; color: var(--text-muted); }
+  .repo-blurb { color: var(--text-muted); margin: 4px 0 18px; max-width: 820px; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: var(--gap); }
+
+  .card {
+    position: relative;
+    display: flex; flex-direction: column;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 18px 16px;
+    box-shadow: var(--shadow-card);
+    transition: transform var(--t-med) var(--ease), border-color var(--t-med) var(--ease), box-shadow var(--t-med) var(--ease), background var(--t-med) var(--ease);
+  }
+  .card::before {
+    content: "";
+    position: absolute; inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, color-mix(in oklab, var(--accent) 0%, transparent), color-mix(in oklab, var(--accent-2) 0%, transparent));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
+    opacity: 0;
+    transition: opacity var(--t-med) var(--ease), background var(--t-med) var(--ease);
+    pointer-events: none;
+  }
+  .card:hover {
+    border-color: var(--border-strong);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-pop);
+    background: var(--bg-card-hover);
+  }
+  .card:hover::before {
+    opacity: 1;
+    background: linear-gradient(135deg, color-mix(in oklab, var(--accent) 45%, transparent), color-mix(in oklab, var(--accent-2) 45%, transparent));
+  }
+  .card-head {
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 10px;
+    margin-bottom: 8px;
+  }
+  .card h3 {
+    margin: 0;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    color: var(--text);
+    word-break: break-word;
+  }
+  .copy-btn {
+    opacity: 0;
+    transform: translateY(-2px);
+    transition: opacity var(--t-fast) var(--ease), transform var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
+    background: none; border: 0; padding: 2px 6px;
+    font-size: 11px; color: var(--text-dim);
+    cursor: pointer; border-radius: 6px; flex: none;
+  }
+  .copy-btn:hover { color: var(--accent); background: var(--accent-soft); }
+  .card:hover .copy-btn, .card:focus-within .copy-btn { opacity: 1; transform: translateY(0); }
+  .copy-btn.copied { color: var(--accent-2); opacity: 1; transform: translateY(0); }
+
+  .card .summary { margin: 0 0 12px; color: var(--text-muted); font-size: 14.5px; line-height: 1.6; }
+  .card .summary strong { color: var(--text); font-weight: 600; }
+
+  .use-cases-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin: 4px 0 8px;
+  }
+  .use-cases {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .use-cases li {
+    position: relative;
+    padding: 8px 12px 8px 26px;
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--text-muted);
+    background: var(--bg-inner);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    transition: border-color var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
+  }
+  .use-cases li:hover { border-color: var(--border-strong); color: var(--text); }
+  .use-cases li::before {
+    content: "";
+    position: absolute;
+    left: 10px;
+    top: 15px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+  .use-cases li code {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 12.5px;
+    padding: 1px 5px;
+    background: color-mix(in oklab, var(--accent) 10%, transparent);
+    border-radius: 4px;
+    color: var(--text);
+  }
+
+  mark {
+    background: color-mix(in oklab, var(--accent) 35%, transparent);
+    color: var(--text);
+    border-radius: 3px;
+    padding: 0 2px;
+  }
+
+  .empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-dim);
+    border: 1px dashed var(--border-strong);
+    border-radius: var(--radius);
+  }
+
+  .curatorial {
+    border: 1px dashed var(--border-strong);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    color: var(--text-muted);
+    background: color-mix(in oklab, var(--bg-card) 70%, transparent);
+  }
+  .curatorial strong { color: var(--text); }
+
+  .install {
+    margin: 0 0 22px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg-inner);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+  }
+  .install-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    background: color-mix(in oklab, var(--bg-card) 70%, transparent);
+  }
+  .install-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .install-title::before {
+    content: "";
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent-2);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent-2) 25%, transparent);
+  }
+  .install-copy {
+    opacity: 1;
+    transform: none;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 11px;
+    padding: 4px 10px;
+    border: 1px solid var(--border-strong);
+    color: var(--text-muted);
+    background: var(--bg-card);
+  }
+  .install-copy:hover { color: var(--accent); background: var(--accent-soft); border-color: color-mix(in oklab, var(--accent) 35%, transparent); }
+  .install-copy.copied { color: var(--accent-2); border-color: color-mix(in oklab, var(--accent-2) 35%, transparent); }
+  .install pre {
+    margin: 0;
+    padding: 14px 16px;
+    overflow-x: auto;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+  }
+  .install pre::-webkit-scrollbar { height: 8px; }
+  .install pre::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 4px; }
+  .install code { font-family: inherit; white-space: pre; }
+
+  .install-master {
+    margin: 28px 0 8px;
+    border-color: color-mix(in oklab, var(--accent) 45%, var(--border));
+    box-shadow: 0 1px 0 rgba(255,255,255,0.06) inset, 0 24px 56px color-mix(in oklab, var(--accent) 18%, transparent);
+    background: linear-gradient(180deg, color-mix(in oklab, var(--accent) 6%, var(--bg-inner)), var(--bg-inner));
+  }
+  .install-master .install-head {
+    background: linear-gradient(90deg, color-mix(in oklab, var(--accent) 10%, transparent), transparent);
+    border-bottom-color: color-mix(in oklab, var(--accent) 28%, var(--border));
+  }
+  .install-master .install-title { color: var(--text); font-size: 12px; }
+  .install-master .install-title::before { background: var(--accent); box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 30%, transparent); }
+  .install-master .install-copy {
+    background: var(--accent);
+    color: #0a0b10;
+    border-color: var(--accent);
+    font-weight: 700;
+    padding: 6px 14px;
+  }
+  .install-master .install-copy:hover { background: color-mix(in oklab, var(--accent) 80%, white); color: #0a0b10; }
+  .master-wrap {
+    padding: 64px 0 24px;
+    scroll-margin-top: 110px;
+  }
+  .master-wrap .install-master { margin: 0; }
+  .install-master pre { max-height: 460px; overflow-y: auto; font-size: 12px; }
+  .install-master pre::-webkit-scrollbar { width: 8px; }
+  .install-master pre::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 4px; }
+  .master-note {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin: 8px 0 4px;
+    max-width: 760px;
+  }
+  .master-note code {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 12.5px;
+    padding: 1px 6px;
+    background: color-mix(in oklab, var(--accent) 10%, transparent);
+    border-radius: 4px;
+    color: var(--text);
+  }
+
+  footer {
+    max-width: var(--max-w);
+    margin: 60px auto 40px;
+    padding: 24px 20px;
+    border-top: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: 13px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  body.searching .repo-nav, body.searching .hero { opacity: 0.6; }
+  .result-count {
+    display: none;
+    font-size: 13px;
+    color: var(--text-dim);
+    padding: 8px 14px;
+    border-radius: 8px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    margin-right: 4px;
+  }
+  body.searching .result-count { display: inline-flex; }
+
+  @media (max-width: 680px) {
+    .brand-sub { display: none; }
+    .search { min-width: 0; flex: 1; }
+    kbd { display: none; }
+    .hero { padding: 36px 0 16px; }
+    .repo { padding: 24px 0 4px; }
+    .grid { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    body::before, .topbar, .repo-nav, .controls, .copy-btn, footer { display: none !important; }
+    body { background: #fff; color: #000; }
+    .card { break-inside: avoid; border: 1px solid #ccc; box-shadow: none; background: #fff; }
+    .use-cases li { background: #fafafa; color: #000; border-color: #ddd; }
+    h1.title { color: #000; -webkit-text-fill-color: #000; }
+    a { color: #000; text-decoration: underline; }
+  }
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+
+<header class="topbar" role="banner">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h10M4 18h13" stroke="white" stroke-width="2.5" stroke-linecap="round"/></svg>
+      </span>
+      <div class="brand-text">
+        <span class="brand-name">The Skills Atlas</span>
+        <span class="brand-sub">90 skills. 270 use cases. Zero redundancy.</span>
+      </div>
+    </div>
+    <div class="controls">
+      <span class="result-count" id="resultCount" aria-live="polite"></span>
+      <label class="search">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <input id="q" type="search" placeholder="Search skills, use cases, or examples..." aria-label="Search skills" autocomplete="off" spellcheck="false">
+        <kbd>/</kbd>
+      </label>
+      <button id="themeBtn" class="icon-btn" aria-label="Toggle color theme" title="Toggle theme">
+        <svg id="themeIcon" viewBox="0 0 24 24" fill="none"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a.5.5 0 0 0-.7-.5A9 9 0 1 0 20.5 15.2a.5.5 0 0 0-.5-.7Z" fill="currentColor"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <div class="container">
+    <section class="hero">
+      <span class="eyebrow">Deterministic ranking, deduped, 270 use cases</span>
+      <h1 class="title">Ninety skills. <span class="title-accent">Three use cases each.</span> Nothing redundant.</h1>
+      <p class="lede">
+        The ten highest-starred skill repositories for Claude Code and Agent Zero, ranked by public GitHub star count. Ten skills per repo, deduplicated against a canonical source priority, with three concrete use cases per skill so you know exactly when to reach for it.
+      </p>
+      <dl class="stats" aria-label="Summary statistics">
+        <div><dt>Skills</dt><dd>90</dd></div>
+        <div><dt>Use cases</dt><dd>270</dd></div>
+        <div><dt>Repos</dt><dd>10</dd></div>
+        <div><dt>Combined stars</dt><dd>490K+</dd></div>
+      </dl>
+      <p class="note">
+        Canonical source priority: anthropics/skills, then superpowers, wshobson/agents, davila7, agent-zero, hesreallyhim, ComposioHQ, VoltAgent, travisvn, BehiSecc. When a skill appears in more than one repo, it lives in the highest-priority repo; the lower-priority repo is replaced with the next unique entry in its README order. The one-command install for all 90 is at the bottom of the page.
+      </p>
+    </section>
+
+
+    <nav class="repo-nav" aria-label="Jump to repository">
+      <div class="repo-nav-inner" id="chips">
+        <a class="chip" href="#anthropics">anthropics/skills <span class="count">10</span></a>
+        <a class="chip" href="#superpowers">obra/superpowers <span class="count">10</span></a>
+        <a class="chip" href="#wshobson">wshobson/agents <span class="count">10</span></a>
+        <a class="chip" href="#davila7">davila7/templates <span class="count">10</span></a>
+        <a class="chip" href="#agent-zero">agent0ai/agent-zero <span class="count">10</span></a>
+        <a class="chip" href="#hesreallyhim">hesreallyhim <span class="count">10</span></a>
+        <a class="chip" href="#composio">ComposioHQ <span class="count">10</span></a>
+        <a class="chip" href="#voltagent">VoltAgent <span class="count">10</span></a>
+        <a class="chip" href="#travisvn">travisvn <span class="count">0</span></a>
+        <a class="chip" href="#behisecc">BehiSecc <span class="count">10</span></a>
+      </div>
+    </nav>
+
+    <!-- anthropics/skills -->
+    <section class="repo" id="anthropics" data-repo="anthropics/skills">
+      <div class="repo-header">
+        <div class="repo-title">
+          <h2>anthropics/skills</h2>
+          <span class="badge canonical">Canonical</span>
+          <span class="badge stars">121K stars</span>
+        </div>
+        <div class="repo-actions">
+          <a class="repo-link" href="https://github.com/anthropics/skills" target="_blank" rel="noopener">View on GitHub</a>
+        </div>
+      </div>
+      <p class="repo-blurb">The official Anthropic repo. The canonical source for document processing (docx, pdf, pptx, xlsx) and many core creative and developer skills.</p>
+      <div class="install">
+        <div class="install-head"><span class="install-title">Install these 10 skills</span><button class="copy-btn install-copy">copy</button></div>
+<pre><code>DEST=~/.claude/skills &amp;&amp; mkdir -p "$DEST" &amp;&amp; TMP=$(mktemp -d) &amp;&amp; \
+git clone --filter=blob:none --sparse --depth 1 https://github.com/anthropics/skills "$TMP/r" &amp;&amp; \
+(cd "$TMP/r" &amp;&amp; git sparse-checkout set \
+  skills/algorithmic-art skills/brand-guidelines skills/canvas-design skills/claude-api \
+  skills/doc-coauthoring skills/docx skills/frontend-design skills/internal-comms \
+  skills/mcp-builder skills/pdf) &amp;&amp; \
+cp -R "$TMP/r/skills/." "$DEST/" &amp;&amp; rm -rf "$TMP" &amp;&amp; \
+echo "Installed 10 skills from anthropics/skills into $DEST"</code></pre>
+      </div>
+      <div class="grid">
+
+        <article class="card"><div class="card-head"><h3>algorithmic-art</h3><button class="copy-btn" data-copy="algorithmic-art">copy</button></div>
+          <p class="summary">Generative art produced with code, in the spirit of p5.js, Processing, and generative design.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>You need a parametric event poster with 200 on-brand variations from one seed.</li>
+            <li>You want an SVG hero background that adapts to any aspect ratio via math instead of re-exporting a raster.</li>
+            <li>You are teaching or prototyping generative ideas and need a Voronoi tessellation or L-system without pulling in p5.js.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>brand-guidelines</h3><button class="copy-btn" data-copy="brand-guidelines">copy</button></div>
+          <p class="summary">Applies Anthropic's official brand system (fonts, colors, spacing) to any artifact you generate.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Drafting an internal Anthropic demo deck that needs exact brand colors, type, and spacing on every slide.</li>
+            <li>Rendering a one-pager artifact that must look official, with approved gradient, typography pairing, and accents.</li>
+            <li>Keeping weekly status updates visually consistent so the team never gets whiplash from rogue palette choices.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>canvas-design</h3><button class="copy-btn" data-copy="canvas-design">copy</button></div>
+          <p class="summary">Produces PNG and PDF visual art using composition principles like balance, hierarchy, and typographic rhythm.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Making a conference pull-quote graphic that balances a big quote, attribution, and negative space.</li>
+            <li>Generating a one-page memo cover PDF with proper hierarchy (kicker, title, subtitle, body) before it goes to print.</li>
+            <li>Composing a moodboard collage of five reference images with visual weight instead of a cluttered grid.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>claude-api</h3><button class="copy-btn" data-copy="claude-api">copy</button></div>
+          <p class="summary">Builds and tunes Anthropic SDK apps with prompt caching, tool use, and extended thinking.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Scaffolding a new Claude-backed chatbot with prompt caching set up correctly on the first commit.</li>
+            <li>Migrating production code from Opus 4.6 to 4.7 and auditing tool schemas, caching breakpoints, and pricing deltas.</li>
+            <li>Diagnosing a 12% cache hit rate by tracing how your system prompt or tools invalidate on every request.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>doc-coauthoring</h3><button class="copy-btn" data-copy="doc-coauthoring">copy</button></div>
+          <p class="summary">Iterative collaborative drafting with awareness of version history and prior edits.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Working through a 60-page product RFC across many sessions where earlier decisions must be respected.</li>
+            <li>Writing a technical book chapter over weeks with consistent voice, terminology, and back-references.</li>
+            <li>Merging feedback from three reviewers on a whitepaper without redrafting from scratch.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>docx</h3><button class="copy-btn" data-copy="docx">copy</button></div>
+          <p class="summary">Word document creation and editing with tracked changes, comments, and styles.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Generating a legally formatted contract template with tracked changes on, numbered clauses, and heading styles.</li>
+            <li>Bulk-editing 50 consulting proposals where each needs the client name, date, and scope filled while preserving firm styles.</li>
+            <li>Extracting tracked changes and comments from a redlined doc so you can push a review summary to your PM tool.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>frontend-design</h3><button class="copy-btn" data-copy="frontend-design">copy</button></div>
+          <p class="summary">UI patterns and implementation guidance, React and Tailwind heavy.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Designing the information architecture and component tree for a new internal dashboard before opening Figma.</li>
+            <li>Recommending typography and spacing tokens for a landing page and emitting the Tailwind config that implements them.</li>
+            <li>Auditing an existing React library for missing states (loading, empty, error) and proposing the fixes.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>internal-comms</h3><button class="copy-btn" data-copy="internal-comms">copy</button></div>
+          <p class="summary">Writes updates, newsletters, FAQs, and status reports in a consistent professional voice.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Drafting a Monday "what I shipped" email in three styles so your manager picks the one that fits.</li>
+            <li>Writing a company-wide FAQ after a reorg where tone, what not to say, and pre-empted questions all matter.</li>
+            <li>Turning a chaotic Slack thread into a clean status update for the leadership digest.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>mcp-builder</h3><button class="copy-btn" data-copy="mcp-builder">copy</button></div>
+          <p class="summary">Scaffolds production-grade MCP servers in Python or TypeScript.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Wrapping your internal billing API so Claude can query invoices and refunds with auth preserved.</li>
+            <li>Exposing a private Postgres reporting database as an MCP server with read-only guards, row limits, and timeouts.</li>
+            <li>Building an OAuth-based MCP server for Notion or Linear and distributing it to your team via <code>npx</code>.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>pdf</h3><button class="copy-btn" data-copy="pdf">copy</button></div>
+          <p class="summary">Extracts tables, text, and metadata from PDFs, and can merge or annotate them.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Extracting structured line items from 800 expense-report PDFs into a CSV for reimbursement.</li>
+            <li>Watermarking a batch of 200 NDAs with "Draft" and splitting out the signature pages.</li>
+            <li>Pulling every table from a 400-page regulatory filing to compare disclosures year over year.</li>
+          </ul>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- obra/superpowers -->
+    <section class="repo" id="superpowers" data-repo="obra/superpowers">
+      <div class="repo-header">
+        <div class="repo-title">
+          <h2>obra/superpowers</h2>
+          <span class="badge canonical">Canonical</span>
+          <span class="badge stars">161K stars</span>
+        </div>
+        <div class="repo-actions">
+          <a class="repo-link" href="https://github.com/obra/superpowers" target="_blank" rel="noopener">View on GitHub</a>
+        </div>
+      </div>
+      <p class="repo-blurb">Jesse Obra's opinionated agentic software development methodology. Workflow discipline, not building blocks.</p>
+      <div class="install">
+        <div class="install-head"><span class="install-title">Install these 10 skills</span><button class="copy-btn install-copy">copy</button></div>
+<pre><code>DEST=~/.claude/skills &amp;&amp; mkdir -p "$DEST" &amp;&amp; TMP=$(mktemp -d) &amp;&amp; \
+git clone --filter=blob:none --sparse --depth 1 https://github.com/obra/superpowers "$TMP/r" &amp;&amp; \
+(cd "$TMP/r" &amp;&amp; git sparse-checkout set \
+  skills/brainstorming skills/dispatching-parallel-agents skills/executing-plans \
+  skills/finishing-a-development-branch skills/receiving-code-review skills/requesting-code-review \
+  skills/subagent-driven-development skills/systematic-debugging skills/test-driven-development \
+  skills/using-git-worktrees) &amp;&amp; \
+cp -R "$TMP/r/skills/." "$DEST/" &amp;&amp; rm -rf "$TMP" &amp;&amp; \
+echo "Installed 10 skills from obra/superpowers into $DEST"</code></pre>
+      </div>
+      <div class="grid">
+
+        <article class="card"><div class="card-head"><h3>brainstorming</h3><button class="copy-btn" data-copy="brainstorming">copy</button></div>
+          <p class="summary">Socratic questioning that turns a vague idea into a concrete design.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Starting a feature spec where you have a one-line idea ("user settings page") and need a scoped design in 20 minutes.</li>
+            <li>Opening move before a product pitch, where you need to articulate user, pain, alternative, and wedge.</li>
+            <li>Stuck in rabbit-hole thinking and wanting someone external to ask "what would cheaper look like" or "what if we shipped half."</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>dispatching-parallel-agents</h3><button class="copy-btn" data-copy="dispatching-parallel-agents">copy</button></div>
+          <p class="summary">Fans out independent work to many subagents in one shot.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>You have a PR ready and want security, perf, test-coverage, and docs reviews running at the same time.</li>
+            <li>Migrating a dependency across three microservices where each migration is independent but must complete before the lockfile bump.</li>
+            <li>Exploring three architecture options in parallel (REST vs GraphQL vs gRPC) and wanting each prototyped by a dedicated agent.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>executing-plans</h3><button class="copy-btn" data-copy="executing-plans">copy</button></div>
+          <p class="summary">Runs multi-step plans with checkpoints and failure recovery.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Running a 14-step production deploy runbook where step 3 must verify before step 4 fires.</li>
+            <li>Executing a three-phase database migration (add column, backfill, remove old column) with human pauses for verification.</li>
+            <li>Bringing up a new environment from IaC where any step's failure should halt and surface the cause, not continue blindly.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>finishing-a-development-branch</h3><button class="copy-btn" data-copy="finishing-a-development-branch">copy</button></div>
+          <p class="summary">Guided close-out flow: tests pass, review addressed, merge clean, branch deleted.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>You think the feature is done and want the pre-merge gauntlet: tests, lint, coverage, changelog, squash, PR body.</li>
+            <li>Handing a long-lived branch to another engineer so they don't inherit half-reverted files or stale lockfile entries.</li>
+            <li>Returning from a two-week vacation to a branch you started and can't remember the state of.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>receiving-code-review</h3><button class="copy-btn" data-copy="receiving-code-review">copy</button></div>
+          <p class="summary">Framework for processing incoming feedback without flinching or getting defensive.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Your PR has 40 comments from three reviewers and you need a triage: addressed, pushing back, rewrite, out of scope.</li>
+            <li>A senior reviewer left a terse "this is wrong" and you need to understand and respond without getting defensive.</li>
+            <li>You disagree with a reviewer and want to draft a technical rebuttal that stays collaborative.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>requesting-code-review</h3><button class="copy-btn" data-copy="requesting-code-review">copy</button></div>
+          <p class="summary">Packages a diff with context, goals, and specific asks.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Submitting a 2000-line refactor PR and wanting reviewers focused on the new service boundary, not adjacent test renames.</li>
+            <li>Asking a cryptography-focused colleague to specifically review the key-handling logic in your auth change.</li>
+            <li>Opening a draft PR for architectural feedback before investing in the implementation.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>subagent-driven-development</h3><button class="copy-btn" data-copy="subagent-driven-development">copy</button></div>
+          <p class="summary">Dispatches subagents per small task with code review gates between each.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Building a CLI from scratch: arg parsing, config, command dispatch, output, each built and reviewed before the next.</li>
+            <li>Greenfielding a feature where drift between phases kills you; each subagent owns one slice with a review gate.</li>
+            <li>Porting a library to a new language where each module's port is a subagent with a correctness check against the original.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>systematic-debugging</h3><button class="copy-btn" data-copy="systematic-debugging">copy</button></div>
+          <p class="summary">Methodical root-cause process: reproduce, isolate, hypothesize, test, confirm.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>A test fails on CI 1 in 20 runs and you need to rule out non-determinism, environment, and timing, one variable at a time.</li>
+            <li>Login works for 98% of users but 2% hit a 500; isolate the segment, reproduce, confirm root cause.</li>
+            <li>A customer says it's slow, your APM says it isn't, and the truth is in the middle.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>test-driven-development</h3><button class="copy-btn" data-copy="test-driven-development">copy</button></div>
+          <p class="summary">Strict red, green, refactor with enforcement of test-first order.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Implementing a validation function where edge cases (empty, unicode, SQL injection) deserve tests before code.</li>
+            <li>Fixing a known bug: write the failing test that reproduces it, confirm red, fix to green, keep the test as a guard.</li>
+            <li>Refactoring a complex class: pin current behavior with characterization tests, then refactor with confidence.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>using-git-worktrees</h3><button class="copy-btn" data-copy="using-git-worktrees">copy</button></div>
+          <p class="summary">Creates isolated git worktrees with safe directory selection.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Juggling three active PRs on the same repo where switching branches breaks your running dev server.</li>
+            <li>Running two Claude Code agents in parallel on the same repo without them stomping each other's files.</li>
+            <li>Keeping a pristine main worktree for quick git-bisect debugging while your feature worktree stays dirty.</li>
+          </ul>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- wshobson/agents -->
+    <section class="repo" id="wshobson" data-repo="wshobson/agents">
+      <div class="repo-header">
+        <div class="repo-title">
+          <h2>wshobson/agents</h2>
+          <span class="badge canonical">Canonical</span>
+          <span class="badge stars">34K stars</span>
+        </div>
+        <div class="repo-actions">
+          <a class="repo-link" href="https://github.com/wshobson/agents" target="_blank" rel="noopener">View on GitHub</a>
+        </div>
+      </div>
+      <p class="repo-blurb">Domain-specialist agent plugins. Bundles, not single-step skills, but each one loads a consistent set of subagents for a domain.</p>
+      <div class="install">
+        <div class="install-head"><span class="install-title">Install these 10 plugins</span><button class="copy-btn install-copy">copy</button></div>
+<pre><code>DEST=~/.claude/plugins &amp;&amp; mkdir -p "$DEST" &amp;&amp; TMP=$(mktemp -d) &amp;&amp; \
+git clone --filter=blob:none --sparse --depth 1 https://github.com/wshobson/agents "$TMP/r" &amp;&amp; \
+(cd "$TMP/r" &amp;&amp; git sparse-checkout set \
+  plugins/accessibility-compliance plugins/agent-orchestration plugins/agent-teams \
+  plugins/api-scaffolding plugins/api-testing-observability plugins/application-performance \
+  plugins/backend-api-security plugins/backend-development plugins/blockchain-web3 \
+  plugins/cicd-automation) &amp;&amp; \
+cp -R "$TMP/r/plugins/." "$DEST/" &amp;&amp; rm -rf "$TMP" &amp;&amp; \
+echo "Installed 10 plugins from wshobson/agents into $DEST"</code></pre>
+      </div>
+      <div class="grid">
+
+        <article class="card"><div class="card-head"><h3>accessibility-compliance</h3><button class="copy-btn" data-copy="accessibility-compliance">copy</button></div>
+          <p class="summary">WCAG AA and AAA audits, ARIA wiring, keyboard navigation, and screen reader checks.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Pre-launch audit of a government portal where WCAG AA failures will block go-live legally.</li>
+            <li>A customer complains your dashboard doesn't work with a screen reader and you need both a fix and a regression guard.</li>
+            <li>Building a new component library with accessibility baked in from day one instead of retrofitted later.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>agent-orchestration</h3><button class="copy-btn" data-copy="agent-orchestration">copy</button></div>
+          <p class="summary">Multi-agent coordination patterns: handoff, shared context, deadlock avoidance.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>A research agent, writer agent, and fact-checker need to collaborate without context getting lost in handoff.</li>
+            <li>Five agents are stepping on each other's writes to shared state and you need coordination primitives, not more RAM.</li>
+            <li>Designing a dispatcher that routes tasks to the cheapest capable agent and reassigns on failure.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>agent-teams</h3><button class="copy-btn" data-copy="agent-teams">copy</button></div>
+          <p class="summary">Pre-composed teams for common workflows like feature-ship and debug-swarm.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Spinning up a "ship a feature" team (planner, implementer, reviewer, tester) with one command instead of wiring it yourself.</li>
+            <li>Deploying a "production incident" team with incident commander, investigator, comms lead, and fixer.</li>
+            <li>Running a "code audit" team across a 500-file PR with each member owning security, perf, architecture, or tests.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>api-scaffolding</h3><button class="copy-btn" data-copy="api-scaffolding">copy</button></div>
+          <p class="summary">REST and GraphQL generators with validation, pagination, and error envelopes.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Greenfielding a REST service for a new internal tool and you want CRUD, validation, pagination, and auth stubs in an hour.</li>
+            <li>Adding a GraphQL layer on top of an existing REST API without rewriting the data access layer.</li>
+            <li>Generating error envelopes, rate-limit headers, and an OpenAPI spec that actually matches your handlers.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>api-testing-observability</h3><button class="copy-btn" data-copy="api-testing-observability">copy</button></div>
+          <p class="summary">Contract tests plus tracing, structured logging, and mocking hooks.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Verifying a payments endpoint honors its contract before flipping the feature flag for 1% of traffic.</li>
+            <li>Adding tracing to a legacy API so you can prove where the 800ms p99 latency actually lives.</li>
+            <li>Generating a mock server from an OpenAPI spec so frontend can start before backend is done.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>application-performance</h3><button class="copy-btn" data-copy="application-performance">copy</button></div>
+          <p class="summary">Profiling, flame graphs, and hot-path optimization across stack layers.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>A page load that used to take 800ms now takes 4s after a dependency bump and the team is blaming each other.</li>
+            <li>A Rails or Django app hits 80% CPU at 100 RPS and you need to know if it's code, the ORM, or the database.</li>
+            <li>Profiling a React app where renders cascade and you can't tell which component is the offender.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>backend-api-security</h3><button class="copy-btn" data-copy="backend-api-security">copy</button></div>
+          <p class="summary">OWASP checks, authn and authz hardening, rate limits, and input validation.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Shipping a new public API and wanting a full OWASP pass before the announce blog post goes live.</li>
+            <li>A pentest report lands with 12 findings and you need to prioritize, fix, and verify each without blowing the schedule.</li>
+            <li>Adding rate limiting, auth, and input validation to endpoints that were internal and are now customer-facing.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>backend-development</h3><button class="copy-btn" data-copy="backend-development">copy</button></div>
+          <p class="summary">General backend bundle spanning Node, Python, and Go: routing, data, queues, jobs.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Day-to-day feature work where you want one consistent agent voice across Node, Python, and Go.</li>
+            <li>Building a webhook consumer with retries, idempotency, and a dead-letter queue without hunting five libraries.</li>
+            <li>Adding a background job for report generation that must be fault-tolerant and observable.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>blockchain-web3</h3><button class="copy-btn" data-copy="blockchain-web3">copy</button></div>
+          <p class="summary">Solidity and EVM contract patterns, security, and gas optimization.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Deploying a Solidity contract for a token sale where a gas inefficiency costs users real money on every call.</li>
+            <li>Integrating a wallet signature flow into your web app without getting nonce handling wrong.</li>
+            <li>Auditing an inherited DeFi contract for reentrancy, rounding, and oracle attacks before adding liquidity.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>cicd-automation</h3><button class="copy-btn" data-copy="cicd-automation">copy</button></div>
+          <p class="summary">Pipeline design, flaky test triage, and deploy gate strategy.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Your GitHub Actions workflow hit 400 lines, takes 22 minutes, and no one remembers why half the steps exist.</li>
+            <li>A flaky test is failing twice a day and blocking merges; identify the pattern and fix or quarantine.</li>
+            <li>Setting up a canary deploy with automated rollback based on error rate.</li>
+          </ul>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- davila7 -->
+    <section class="repo" id="davila7" data-repo="davila7/claude-code-templates">
+      <div class="repo-header">
+        <div class="repo-title">
+          <h2>davila7/claude-code-templates</h2>
+          <span class="badge stars">25K stars</span>
+        </div>
+        <div class="repo-actions">
+          <a class="repo-link" href="https://github.com/davila7/claude-code-templates" target="_blank" rel="noopener">View on GitHub</a>
+        </div>
+      </div>
+      <p class="repo-blurb">A CLI-installable catalog of skill, agent, and command categories at aitmpl.com. Category bundles rather than single skills. Document-processing category dropped as redundant with anthropics/skills.</p>
+      <div class="install">
+        <div class="install-head"><span class="install-title">Install these 10 skill categories</span><button class="copy-btn install-copy">copy</button></div>
+<pre><code>DEST=~/.claude/skills &amp;&amp; mkdir -p "$DEST" &amp;&amp; TMP=$(mktemp -d) &amp;&amp; \
+git clone --filter=blob:none --sparse --depth 1 https://github.com/davila7/claude-code-templates "$TMP/r" &amp;&amp; \
+(cd "$TMP/r" &amp;&amp; git sparse-checkout set \
+  cli-tool/components/skills/ai-maestro cli-tool/components/skills/ai-research \
+  cli-tool/components/skills/analytics cli-tool/components/skills/business-marketing \
+  cli-tool/components/skills/creative-design cli-tool/components/skills/database \
+  cli-tool/components/skills/design-to-code cli-tool/components/skills/enterprise-communication \
+  cli-tool/components/skills/productivity cli-tool/components/skills/sentry) &amp;&amp; \
+cp -R "$TMP/r/cli-tool/components/skills/." "$DEST/" &amp;&amp; rm -rf "$TMP" &amp;&amp; \
+echo "Installed 10 skill categories from davila7 into $DEST"</code></pre>
+      </div>
+      <div class="grid">
+
+        <article class="card"><div class="card-head"><h3>ai-maestro</h3><button class="copy-btn" data-copy="ai-maestro">copy</button></div>
+          <p class="summary">AI orchestration templates for multi-model routing, fallback, and cost caps.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Routing queries to Haiku for simple Q&A, Sonnet for coding, and Opus for high-stakes planning to keep costs sane.</li>
+            <li>Building a fallback chain so Opus rate-limiting degrades to Sonnet before failing the user.</li>
+            <li>Running a model-selection layer that picks based on estimated tokens, complexity score, and user tier.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>ai-research</h3><button class="copy-btn" data-copy="ai-research">copy</button></div>
+          <p class="summary">Patterns for literature review, source aggregation, and comparative analysis.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Deep-diving 40 competitors where you need a feature, pricing, and positioning matrix before a board meeting.</li>
+            <li>Running a literature review on "agentic RAG" across academic papers, blogs, and GitHub with source tracking.</li>
+            <li>Investigating a new framework by reading its docs, comparing to three incumbents, and writing a decision memo.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>analytics</h3><button class="copy-btn" data-copy="analytics">copy</button></div>
+          <p class="summary">Instrumentation helpers for events, funnels, and cohorts.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Adding PostHog to a Next.js app on day one with events, identity, funnels, and cohorts wired correctly.</li>
+            <li>Migrating from GA to Mixpanel without losing your historical funnel definitions.</li>
+            <li>Instrumenting a SaaS signup flow to find where the 40% drop-off between email and first action is happening.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>business-marketing</h3><button class="copy-btn" data-copy="business-marketing">copy</button></div>
+          <p class="summary">CRM and marketing automations: sequences, lead scoring, attribution.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Standing up a lead-scoring pipeline that syncs HubSpot to Salesforce and notifies the right rep in Slack.</li>
+            <li>Running an ABM campaign where Claude generates personalized outbound sequences for 100 accounts from a spreadsheet.</li>
+            <li>Building a SaaS onboarding email drip that branches on user activation state, not elapsed time.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>creative-design</h3><button class="copy-btn" data-copy="creative-design">copy</button></div>
+          <p class="summary">Creative and visual workflows like moodboards and brand exploration.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Kicking off a rebrand with a moodboard grounded in three reference brands and written brand attributes.</li>
+            <li>Exploring visual directions before anyone opens Figma so the team has concrete artifacts to react to.</li>
+            <li>Generating 10 logo directions with a written rationale for each before the client review.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>database</h3><button class="copy-btn" data-copy="database">copy</button></div>
+          <p class="summary">Schema design, migrations, and query optimization across SQL and NoSQL.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Designing a multi-tenant SaaS schema where row-level security, sharding, and backfill need to be considered now.</li>
+            <li>Investigating a slow query hitting 12s p99 and deciding between an index, a rewrite, or a materialized view.</li>
+            <li>Planning a zero-downtime Postgres to Aurora migration with logical replication and a cutover script.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>design-to-code</h3><button class="copy-btn" data-copy="design-to-code">copy</button></div>
+          <p class="summary">Figma and screenshots converted to React or HTML.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>A Figma handoff of a 20-screen dashboard and you need React + Tailwind scaffolding by Friday.</li>
+            <li>A PNG screenshot of a competitor UI that you want to recreate responsively as a learning exercise or demo.</li>
+            <li>A Figma component with interaction states translated into accessible React with proper focus management.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>enterprise-communication</h3><button class="copy-btn" data-copy="enterprise-communication">copy</button></div>
+          <p class="summary">Cross-department announcements and change management comms.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Writing the CEO note for a layoff that must be clear, humane, legally reviewed, and ready to send in 48 hours.</li>
+            <li>Drafting a reorg with timeline, FAQ, manager script, and all-hands talking points.</li>
+            <li>Rolling out a new expense policy to 500 employees where tone matters as much as the rules.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>productivity</h3><button class="copy-btn" data-copy="productivity">copy</button></div>
+          <p class="summary">Personal and team workflow automations like email triage and focus rituals.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Building a morning email triage routine that drafts replies, flags urgencies, and archives newsletters.</li>
+            <li>Setting up a weekly focus review where an agent reads last week's calendar and proposes time blocks for this week.</li>
+            <li>Auto-generating meeting-prep briefs the night before based on attendees and past conversation context.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>sentry</h3><button class="copy-btn" data-copy="sentry">copy</button></div>
+          <p class="summary">Issue triage, regression detection, and release health on top of Sentry.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Triaging 200 unresolved Sentry issues by clustering and filing one ticket per root cause instead of 200.</li>
+            <li>Detecting a regression in release 2.14 by comparing error rates to 2.13 within an hour of deploy.</li>
+            <li>Wiring release health into a digest Slack channel instead of a firehose of per-error pings.</li>
+          </ul>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- agent-zero -->
+    <section class="repo" id="agent-zero" data-repo="agent0ai/agent-zero">
+      <div class="repo-header">
+        <div class="repo-title">
+          <h2>agent0ai/agent-zero</h2>
+          <span class="badge stars">17K stars</span>
+        </div>
+        <div class="repo-actions">
+          <a class="repo-link" href="https://github.com/agent0ai/agent-zero" target="_blank" rel="noopener">View on GitHub</a>
+        </div>
+      </div>
+      <p class="repo-blurb">Skills and agent personas bundled with the Agent Zero framework. Most "skills" here are about operating the A0 plugin system itself.</p>
+      <div class="install">
+        <div class="install-head"><span class="install-title">Install these 8 skills + 2 agents</span><button class="copy-btn install-copy">copy</button></div>
+<pre><code>DEST=~/agent-zero-skills &amp;&amp; mkdir -p "$DEST/skills" "$DEST/agents" &amp;&amp; TMP=$(mktemp -d) &amp;&amp; \
+git clone --filter=blob:none --sparse --depth 1 https://github.com/agent0ai/agent-zero "$TMP/r" &amp;&amp; \
+(cd "$TMP/r" &amp;&amp; git sparse-checkout set \
+  skills/a0-create-plugin skills/a0-debug-plugin skills/a0-development \
+  skills/a0-manage-plugin skills/a0-plugin-router skills/a0-review-plugin \
+  skills/a0-setup-cli skills/create-skill \
+  agents/agent0 agents/researcher) &amp;&amp; \
+cp -R "$TMP/r/skills/." "$DEST/skills/" &amp;&amp; cp -R "$TMP/r/agents/." "$DEST/agents/" &amp;&amp; rm -rf "$TMP" &amp;&amp; \
+echo "Installed 8 A0 skills + 2 A0 agents into $DEST"</code></pre>
+      </div>
+      <div class="grid">
+
+        <article class="card"><div class="card-head"><h3>a0-create-plugin</h3><button class="copy-btn" data-copy="a0-create-plugin">copy</button></div>
+          <p class="summary">Scaffolds a new Agent Zero plugin with manifest and handlers.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Standing up a new A0 plugin with manifest, handlers, config, and test scaffolding generated consistently.</li>
+            <li>Converting a working script into a distributable A0 plugin that others can install.</li>
+            <li>Bootstrapping an internal plugin for a proprietary API so your team can call it from A0 conversations.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>a0-debug-plugin</h3><button class="copy-btn" data-copy="a0-debug-plugin">copy</button></div>
+          <p class="summary">Interactive debugger for A0 plugin handlers and runtime state.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>A plugin works in development but fails silently in production and you need to inspect request lifecycle and state.</li>
+            <li>Intermittent errors where 1 in 10 plugin calls return stale data and you suspect cache invalidation.</li>
+            <li>Walking through a failing handler step by step with Claude narrating why each transition happens.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>a0-development</h3><button class="copy-btn" data-copy="a0-development">copy</button></div>
+          <p class="summary">A0 development guide covering project layout, test harness, and best practices.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>First day joining an A0 codebase and needing the mental model of plugins, agents, and message flow.</li>
+            <li>Setting up a clean A0 dev environment on a new laptop that matches the team's configuration.</li>
+            <li>Writing your first plugin and wanting to follow the canonical project layout and test harness.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>a0-manage-plugin</h3><button class="copy-btn" data-copy="a0-manage-plugin">copy</button></div>
+          <p class="summary">Install, enable, disable, and version-pin A0 plugins.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Promoting a plugin from staging to production with version pinning so nothing drifts.</li>
+            <li>Rolling back a plugin update that broke a workflow without disturbing other installed plugins.</li>
+            <li>Auditing which plugins are installed across 20 A0 instances and detecting version skew.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>a0-plugin-router</h3><button class="copy-btn" data-copy="a0-plugin-router">copy</button></div>
+          <p class="summary">Dispatches incoming requests across plugins with defined precedence.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Two plugins both claim to handle "send-email" and you need deterministic rules based on channel, source, or explicit intent.</li>
+            <li>Adding a fallback chain so a primary plugin failure routes to a backup before surfacing an error.</li>
+            <li>Implementing feature flags to gradually roll out a new plugin to 10% of requests.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>a0-review-plugin</h3><button class="copy-btn" data-copy="a0-review-plugin">copy</button></div>
+          <p class="summary">Code review checklist tuned to A0 plugin patterns.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Reviewing a community-submitted A0 plugin before merging into your org's distribution.</li>
+            <li>Running a security-focused review on a plugin that touches authentication or secrets.</li>
+            <li>Verifying a plugin follows naming, manifest, and handler conventions so it doesn't pollute the ecosystem.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>a0-setup-cli</h3><button class="copy-btn" data-copy="a0-setup-cli">copy</button></div>
+          <p class="summary">Bootstraps the A0 CLI and auth on a fresh machine or CI runner.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Onboarding a new engineer from "fresh laptop" to "working A0" in under ten minutes.</li>
+            <li>Setting up A0 on a CI runner so automated tests can interact with it.</li>
+            <li>Resetting a botched installation without manually chasing down config files.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>create-skill</h3><button class="copy-btn" data-copy="create-skill">copy</button></div>
+          <p class="summary">Creates a new skill inside the A0 runtime.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>You noticed Claude keeps getting your release checklist wrong; capture the steps once as a reusable skill.</li>
+            <li>Your team has a specific code-review style; package it so every review runs through the same lens.</li>
+            <li>A vendor's API has quirks Claude keeps tripping on; codify the workarounds once and reuse.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>agent0</h3><button class="copy-btn" data-copy="agent0">copy</button></div>
+          <p class="summary">Core A0 persona: generalist, tool-using, memory-aware.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Default persona for tasks that don't fit a specialist, with tool access and memory enabled.</li>
+            <li>Casual coding assistance where the task shifts mid-conversation and you don't want to swap agents.</li>
+            <li>Exploratory work where you are not yet sure what kind of agent you need.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>researcher</h3><button class="copy-btn" data-copy="researcher">copy</button></div>
+          <p class="summary">Research-specialized A0 agent: sources, citations, synthesis.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Writing a market research report where every claim needs a citation, not a vibe.</li>
+            <li>Preparing an engineering decision memo comparing five options with evidence and tradeoffs.</li>
+            <li>Deep-researching a medical or legal topic where rigorous sourcing matters more than fluency.</li>
+          </ul>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- hesreallyhim -->
+    <section class="repo" id="hesreallyhim" data-repo="hesreallyhim/awesome-claude-code">
+      <div class="repo-header">
+        <div class="repo-title">
+          <h2>hesreallyhim/awesome-claude-code</h2>
+          <span class="badge stars">40K stars</span>
+        </div>
+        <div class="repo-actions">
+          <a class="repo-link" href="https://github.com/hesreallyhim/awesome-claude-code" target="_blank" rel="noopener">View on GitHub</a>
+        </div>
+      </div>
+      <p class="repo-blurb">The curator's picks in the Agent Skills section. Each entry is a full external skill pack worth installing on its own.</p>
+      <div class="install">
+        <div class="install-head"><span class="install-title">Install these 10 external skill packs</span><button class="copy-btn install-copy">copy</button></div>
+<pre><code>DEST=~/.claude/skills &amp;&amp; mkdir -p "$DEST" &amp;&amp; \
+for url in \
+  https://github.com/avifenesh/agentsys \
+  https://github.com/robertguss/claude-skills \
+  https://github.com/akin-ozer/cc-devops-skills \
+  https://github.com/undeadlist/claude-code-agents \
+  https://github.com/fcakyon/claude-codex-settings \
+  https://github.com/dreamiurg/claude-mountaineering-skills \
+  https://github.com/K-Dense-AI/claude-scientific-skills \
+  https://github.com/zarazhangrui/codebase-to-course \
+  https://github.com/skills-directory/skill-codex \
+  https://github.com/EveryInc/compound-engineering-plugin; do
+  git clone --depth 1 "$url" "$DEST/$(basename "$url")" &amp;&amp; echo "Installed $(basename "$url")"
+done</code></pre>
+      </div>
+      <div class="grid">
+
+        <article class="card"><div class="card-head"><h3>AgentSys</h3><button class="copy-btn" data-copy="AgentSys">copy</button></div>
+          <p class="summary">End-to-end workflow bundle covering task-to-prod, PRs, drift detection, and reviews.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Standing up end-to-end coverage (intake, PR, review, deploy) for a small team without picking 15 skills yourself.</li>
+            <li>A solo founder wanting one opinionated system instead of assembling pieces.</li>
+            <li>A team adopting agentic workflows for the first time and needing a best-practices starting point.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>Book Factory</h3><button class="copy-btn" data-copy="Book Factory">copy</button></div>
+          <p class="summary">A nonfiction book pipeline: outline, draft, edit, index, publish.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Writing a nonfiction book with coordinated outline, drafting, editor passes, and index generation.</li>
+            <li>Turning a year of blog posts into a coherent book manuscript.</li>
+            <li>Producing a long whitepaper or report that must look like a book, not a Google Doc export.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>cc-devops-skills</h3><button class="copy-btn" data-copy="cc-devops-skills">copy</button></div>
+          <p class="summary">IaC skills across clouds with validators and generators.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Writing Terraform for AWS this week, Azure next week, and GCP the week after without relearning conventions.</li>
+            <li>Maintaining IaC across three clouds with consistent module patterns and validators that catch drift.</li>
+            <li>Onboarding a junior DevOps engineer who needs opinionated guardrails before touching production infra.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>Claude Code Agents</h3><button class="copy-btn" data-copy="Claude Code Agents">copy</button></div>
+          <p class="summary">Solo-dev E2E workflow with parallel auditors and anti-rogue protocols.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Working solo but wanting teammate-style safeguards to catch mistakes you'd miss reviewing yourself.</li>
+            <li>Building a side project where parallel auditors review security, perf, and architecture without you hiring.</li>
+            <li>A founder doing E2E dev who wants anti-rogue protocols so Claude doesn't silently rewrite the auth system.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>Claude Codex Settings</h3><button class="copy-btn" data-copy="Claude Codex Settings">copy</button></div>
+          <p class="summary">Curated plugin set for GitHub, Azure, Mongo, Tavily, Playwright.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>A new team standing up Claude Code from scratch and wanting integrations for GitHub, Azure, Mongo, Tavily, Playwright pre-wired.</li>
+            <li>Forking as a starting point for your org's opinionated Claude setup.</li>
+            <li>A study resource for how production-grade Claude Code plugin bundles are organized.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>Claude Mountaineering Skills</h3><button class="copy-btn" data-copy="Claude Mountaineering Skills">copy</button></div>
+          <p class="summary">Aggregates Mountaineers.org, PeakBagger, and SummitPost into route beta reports.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Planning a Cascades trip where you need route conditions, avalanche forecast, and recent trip reports in one document.</li>
+            <li>A climber with a peak-bagging list who wants Claude to prepare route beta for each summit.</li>
+            <li>Integrating into an outdoor-adventure app for automated trip briefings.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>Claude Scientific Skills</h3><button class="copy-btn" data-copy="Claude Scientific Skills">copy</button></div>
+          <p class="summary">A suite covering research, science, engineering, finance, and writing.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>A PhD student needing literature synthesis with proper citations across 200 papers.</li>
+            <li>An analyst writing a technical finance report that requires both numeric rigor and prose quality.</li>
+            <li>Engineering research where domain-specific calculations and references matter.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>Codebase to Course</h3><button class="copy-btn" data-copy="Codebase to Course">copy</button></div>
+          <p class="summary">Turns any repo into an interactive single-page HTML course.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Converting your open-source library into an onboarding course for contributors.</li>
+            <li>Turning a legacy codebase into an interactive onboarding tool for new hires.</li>
+            <li>Teaching a framework via its reference implementation without writing a book.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>Codex Skill</h3><button class="copy-btn" data-copy="Codex Skill">copy</button></div>
+          <p class="summary">Drive OpenAI Codex from inside Claude Code with auto parameter inference.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Pairing Claude for planning and OpenAI Codex for mechanical refactors to get the best of both.</li>
+            <li>Running a second opinion on a tricky implementation by having Codex attempt the same task.</li>
+            <li>Delegating a deterministic task (test generation, one-shot refactor) to Codex while Claude orchestrates.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>Compound Engineering Plugin</h3><button class="copy-btn" data-copy="Compound Engineering Plugin">copy</button></div>
+          <p class="summary">Turns past mistakes into reusable lessons and workflow guards.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>After a production incident, capturing the root cause as a rule that prevents the same bug class in future PRs.</li>
+            <li>Turning a "lesson learned" retrospective into living workflow guards instead of a forgotten wiki page.</li>
+            <li>Building institutional memory for a small team without a formal postmortem process.</li>
+          </ul>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- composio -->
+    <section class="repo" id="composio" data-repo="ComposioHQ/awesome-claude-skills">
+      <div class="repo-header">
+        <div class="repo-title">
+          <h2>ComposioHQ/awesome-claude-skills</h2>
+          <span class="badge stars">55K stars</span>
+        </div>
+        <div class="repo-actions">
+          <a class="repo-link" href="https://github.com/ComposioHQ/awesome-claude-skills" target="_blank" rel="noopener">View on GitHub</a>
+        </div>
+      </div>
+      <p class="repo-blurb">The five anthropics-duplicate entries are dropped. In their place, the five most unique Composio picks plus core app-automation skills from their ecosystem.</p>
+      <div class="install">
+        <div class="install-head"><span class="install-title">Install these 10 skills (6 in-repo + 4 external)</span><button class="copy-btn install-copy">copy</button></div>
+<pre><code>DEST=~/.claude/skills &amp;&amp; mkdir -p "$DEST" &amp;&amp; TMP=$(mktemp -d) &amp;&amp; \
+git clone --filter=blob:none --sparse --depth 1 https://github.com/ComposioHQ/awesome-claude-skills "$TMP/r" &amp;&amp; \
+(cd "$TMP/r" &amp;&amp; git sparse-checkout set \
+  changelog-generator connect gmail-automation slack-automation github-automation linear-automation) &amp;&amp; \
+for s in changelog-generator connect gmail-automation slack-automation github-automation linear-automation; do \
+  cp -R "$TMP/r/$s" "$DEST/"; \
+done &amp;&amp; rm -rf "$TMP" &amp;&amp; \
+for url in \
+  https://github.com/smerchek/claude-epub-skill \
+  https://github.com/zxkane/aws-skills \
+  https://github.com/bluzername/claude-code-terminal-title \
+  https://github.com/chrisvoncsefalvay/claude-d3js-skill; do
+  git clone --depth 1 "$url" "$DEST/$(basename "$url")"
+done &amp;&amp; echo "Installed 10 Composio-curated skills into $DEST"</code></pre>
+      </div>
+      <div class="grid">
+
+        <article class="card"><div class="card-head"><h3>markdown-to-epub</h3><button class="copy-btn" data-copy="markdown-to-epub">copy</button></div>
+          <p class="summary">Converts markdown or chat summaries into proper EPUB ebooks.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Taking accumulated notes on a topic and shipping a Kindle-readable ebook for the weekend.</li>
+            <li>Producing a client deliverable as an EPUB because the client wants to read it on their reader.</li>
+            <li>Archiving a long Claude conversation as a structured book instead of a scrolling log.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>aws-skills</h3><button class="copy-btn" data-copy="aws-skills">copy</button></div>
+          <p class="summary">AWS CDK best practices, cost optimization MCPs, and serverless or event-driven patterns.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Greenfielding a serverless app on AWS with CDK patterns that aren't from 2019.</li>
+            <li>A cost audit after your bill doubled following a feature launch and you need to find the culprit.</li>
+            <li>Designing a multi-region event-driven architecture with proper failure modes.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>changelog-generator</h3><button class="copy-btn" data-copy="changelog-generator">copy</button></div>
+          <p class="summary">Turns git commits into user-facing release notes.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Turning 200 commits from the sprint into release notes that keep only the user-visible changes.</li>
+            <li>Generating weekly internal "what shipped" digests from git history.</li>
+            <li>Writing customer-facing changelogs for an API release where breaking changes need callouts.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>claude-code-terminal-title</h3><button class="copy-btn" data-copy="claude-code-terminal-title">copy</button></div>
+          <p class="summary">Dynamic terminal window titles reflecting the active task.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Five Claude Code windows are open on different projects and you can't remember which is which.</li>
+            <li>Recording a demo video where the terminal title should reflect what is happening on screen.</li>
+            <li>Tracking time against a project via a title scrape from your window manager.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>d3js-visualization</h3><button class="copy-btn" data-copy="d3js-visualization">copy</button></div>
+          <p class="summary">D3 charts and fully interactive visualizations.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Building an interactive chart where the viz is the product and Recharts falls short.</li>
+            <li>A data storytelling piece with custom transitions, brushing, and linked views.</li>
+            <li>Replacing a stale static screenshot in docs with an interactive exploration.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>connect (Composio)</h3><button class="copy-btn" data-copy="connect">copy</button></div>
+          <p class="summary">An auth and action layer that lets Claude operate 1000+ apps including Gmail, Slack, GitHub, and Notion.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>You want one plugin that authorizes Claude to act across Gmail, Slack, GitHub, and Notion from one conversation.</li>
+            <li>Building a "do the thing across apps" assistant where OAuth and API management would otherwise eat your week.</li>
+            <li>Automating a cross-tool workflow (ticket to doc to message to email) without writing adapters yourself.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>gmail-automation</h3><button class="copy-btn" data-copy="gmail-automation">copy</button></div>
+          <p class="summary">Send, reply, search, label, draft, and attach over Gmail.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Triaging your inbox every morning: archive newsletters, draft replies to customers, flag action items.</li>
+            <li>Extracting receipts from purchases this quarter for expense reporting.</li>
+            <li>Setting a vacation auto-reply with contextual forwarding to the right person.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>slack-automation</h3><button class="copy-btn" data-copy="slack-automation">copy</button></div>
+          <p class="summary">Messages, channels, threads, scheduling, and reactions across Slack.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Running a standup bot that collects yesterday, today, blockers from each channel member.</li>
+            <li>Archiving an important thread into a Notion doc with full context preserved.</li>
+            <li>Scheduling messages across time zones so nobody pings at midnight.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>github-automation</h3><button class="copy-btn" data-copy="github-automation">copy</button></div>
+          <p class="summary">Issues, PRs, repos, branches, actions, and code search via the GitHub API.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Triaging 200 open issues by labeling, detecting duplicates, and producing a prioritized list.</li>
+            <li>Opening release PRs automatically on a schedule with the right reviewers and labels.</li>
+            <li>Bulk cleanup of stale branches and outdated labels across a 40-repo org.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>linear-automation</h3><button class="copy-btn" data-copy="linear-automation">copy</button></div>
+          <p class="summary">Issues, projects, cycles, teams, and workflows in Linear.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Moving sprint planning from a Zoom call to an async agent that proposes a cycle based on velocity and priority.</li>
+            <li>Generating a weekly digest of in-progress work grouped by team for leadership.</li>
+            <li>Reshuffling the roadmap when priorities change without updating 80 tickets by hand.</li>
+          </ul>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- voltagent -->
+    <section class="repo" id="voltagent" data-repo="VoltAgent/awesome-agent-skills">
+      <div class="repo-header">
+        <div class="repo-title">
+          <h2>VoltAgent/awesome-agent-skills</h2>
+          <span class="badge stars">17K stars</span>
+        </div>
+        <div class="repo-actions">
+          <a class="repo-link" href="https://github.com/VoltAgent/awesome-agent-skills" target="_blank" rel="noopener">View on GitHub</a>
+        </div>
+      </div>
+      <p class="repo-blurb">Skill packs published by official product teams. The Composio pack is dropped since it overlaps with ComposioHQ's own repo.</p>
+      <div class="install">
+        <div class="install-head"><span class="install-title">Install these team skill packs (where source repos are public)</span><button class="copy-btn install-copy">copy</button></div>
+<pre><code># VoltAgent lists skills via officialskills.sh. Below clones each team's public source repo.
+# For supabase, google-gemini, stripe, tinybird, terraform: see https://github.com/VoltAgent/awesome-agent-skills
+DEST=~/.claude/skills &amp;&amp; mkdir -p "$DEST" &amp;&amp; \
+for entry in \
+  "voltagent=https://github.com/VoltAgent/voltagent" \
+  "angular-skills=https://github.com/angular/skills" \
+  "courier-skills=https://github.com/trycourier/courier-skills" \
+  "callstack-skills=https://github.com/callstackincubator/skills" \
+  "better-auth=https://github.com/better-auth/better-auth"; do
+  name="${entry%%=*}"; url="${entry#*=}"
+  git clone --depth 1 "$url" "$DEST/$name" 2&gt;/dev/null &amp;&amp; echo "Installed $name" || echo "Skipped $name"
+done</code></pre>
+      </div>
+      <div class="grid">
+
+        <article class="card"><div class="card-head"><h3>voltagent</h3><button class="copy-btn" data-copy="voltagent">copy</button></div>
+          <p class="summary">Multi-agent orchestration templates from the VoltAgent team.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Standing up a multi-agent workflow in hours where you'd otherwise build graph primitives from scratch.</li>
+            <li>Evaluating VoltAgent against LangGraph by running the same use case through both.</li>
+            <li>Building a product-feature-team graph where planner, coder, reviewer, and tester each play their role.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>angular</h3><button class="copy-btn" data-copy="angular">copy</button></div>
+          <p class="summary">Official Angular skill direct from the Angular team.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Starting a new Angular 18 enterprise app with modern idioms: standalone components, signals, control flow.</li>
+            <li>Upgrading a legacy Angular 12 app where the team is stuck on outdated patterns.</li>
+            <li>Writing a complex form with reactive forms, validation, and proper change detection tuning.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>supabase</h3><button class="copy-btn" data-copy="supabase">copy</button></div>
+          <p class="summary">Postgres, auth, edge functions, and storage idioms.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Building a SaaS MVP with Postgres, auth, storage, and edge functions wired in one weekend.</li>
+            <li>Migrating off Firebase without rewriting your app for a different auth model.</li>
+            <li>Setting up Row-Level Security correctly so multi-tenant isolation is not "read the docs and hope."</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>google-gemini</h3><button class="copy-btn" data-copy="google-gemini">copy</button></div>
+          <p class="summary">Gemini API patterns and tooling.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Routing long-context tasks (2M tokens) to Gemini because Claude's window isn't enough.</li>
+            <li>Using Gemini grounding for search-integrated answers where Claude's web tool falls short.</li>
+            <li>Benchmarking a Claude+Gemini ensemble against Claude alone for your specific use case.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>stripe</h3><button class="copy-btn" data-copy="stripe">copy</button></div>
+          <p class="summary">Payment integration: charges, subscriptions, invoices, webhooks.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Implementing subscription billing with proration, trials, and coupons without getting webhook handling wrong.</li>
+            <li>Building a marketplace with Stripe Connect and the right KYC flow.</li>
+            <li>Adding a paywall to a consumer product via Stripe Checkout and the customer portal.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>courier</h3><button class="copy-btn" data-copy="courier">copy</button></div>
+          <p class="summary">Multi-channel notification orchestration across email, SMS, push, and Slack.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>One "order shipped" event needs to fan out to email, SMS, push, and Slack with per-channel templates.</li>
+            <li>Implementing user notification preferences (quiet hours, channel priority) without writing the preference engine.</li>
+            <li>Routing on-call alerts to phone, then email, then Slack with escalation rules.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>callstack</h3><button class="copy-btn" data-copy="callstack">copy</button></div>
+          <p class="summary">React Native patterns straight from the CallStack consulting team.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Building a React Native app with performance and UX quality the CallStack team would approve of.</li>
+            <li>Debugging a Hermes runtime issue where the stock RN docs don't help.</li>
+            <li>Setting up a monorepo for shared code between a React Native mobile app and a React web app.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>better-auth</h3><button class="copy-btn" data-copy="better-auth">copy</button></div>
+          <p class="summary">Modern authentication framework covering sessions, OAuth, and passkeys.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Greenfielding an app's auth layer with sessions, OAuth, and passkeys correct on day one.</li>
+            <li>Migrating off NextAuth because you want more control without adopting a vendor.</li>
+            <li>Adding passkey support to an existing password-based app with a clean migration path.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>tinybird</h3><button class="copy-btn" data-copy="tinybird">copy</button></div>
+          <p class="summary">Real-time analytics pipes over ClickHouse.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Building a real-time leaderboard that processes a million events a day and renders in under a second.</li>
+            <li>Replacing a Postgres analytics table that can't keep up with product metric ingestion.</li>
+            <li>Adding in-product usage analytics visible to end users without building a custom pipeline.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>terraform</h3><button class="copy-btn" data-copy="terraform">copy</button></div>
+          <p class="summary">IaC authoring and module conventions from HashiCorp.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Designing multi-environment infrastructure (dev, stage, prod) as modules that don't drift.</li>
+            <li>Writing a reusable networking module for your org covering VPCs, subnets, and peering consistently.</li>
+            <li>Managing a 40-account AWS org with consistent Terraform modules and workspaces.</li>
+          </ul>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- travisvn (curatorial notice) -->
+    <section class="repo" id="travisvn" data-repo="travisvn/awesome-claude-skills">
+      <div class="repo-header">
+        <div class="repo-title">
+          <h2>travisvn/awesome-claude-skills</h2>
+          <span class="badge stars">12K stars</span>
+          <span class="badge">Curatorial only</span>
+        </div>
+        <div class="repo-actions">
+          <a class="repo-link" href="https://github.com/travisvn/awesome-claude-skills" target="_blank" rel="noopener">View on GitHub</a>
+        </div>
+      </div>
+      <p class="repo-blurb">Included for completeness. Its top-10 "Official Skills" section is 100% content from anthropics/skills (docx, pdf, pptx, xlsx, canvas-design, theme-factory, brand-guidelines, web-artifacts-builder, mcp-builder, webapp-testing).</p>
+      <div class="curatorial">
+        <strong>Why there are zero cards here:</strong> after deduplication against the canonical sources, nothing unique remains in this repo's surfaced top ten. The repo is still valuable as a readable index of Anthropic official skills plus links to community skills and tutorials. Visit the GitHub link above if you want the curated view.
+      </div>
+    </section>
+
+    <!-- behisecc -->
+    <section class="repo" id="behisecc" data-repo="BehiSecc/awesome-claude-skills">
+      <div class="repo-header">
+        <div class="repo-title">
+          <h2>BehiSecc/awesome-claude-skills</h2>
+          <span class="badge stars">9K stars</span>
+        </div>
+        <div class="repo-actions">
+          <a class="repo-link" href="https://github.com/BehiSecc/awesome-claude-skills" target="_blank" rel="noopener">View on GitHub</a>
+        </div>
+      </div>
+      <p class="repo-blurb">Security-leaning curation. Document and dev overlaps dropped. The ten kept are security-focused entries that do not appear elsewhere above.</p>
+      <div class="install">
+        <div class="install-head"><span class="install-title">Install these 10 security skills</span><button class="copy-btn install-copy">copy</button></div>
+<pre><code>DEST=~/.claude/skills &amp;&amp; mkdir -p "$DEST" &amp;&amp; \
+for url in \
+  https://github.com/BehiSecc/VibeSec-Skill \
+  https://github.com/trailofbits/skills \
+  https://github.com/jthack/ffuf_claude_skill \
+  https://github.com/agamm/claude-code-owasp \
+  https://github.com/wrsmith108/varlock-claude-skill \
+  https://github.com/wd041216-bit/ironclaw-agent-guard \
+  https://github.com/omkamal/pypict-claude-skill \
+  https://github.com/oil-oil/oiloil-ui-ux-guide \
+  https://github.com/jacob-g-park/polaris-datainsight-doc-extract; do
+  git clone --depth 1 "$url" "$DEST/$(basename "$url")" &amp;&amp; echo "Installed $(basename "$url")"
+done &amp;&amp; \
+TMP=$(mktemp -d) &amp;&amp; \
+git clone --filter=blob:none --sparse --depth 1 https://github.com/openclaw/skills "$TMP/r" &amp;&amp; \
+(cd "$TMP/r" &amp;&amp; git sparse-checkout set skills/agentward-ai/sanitize) &amp;&amp; \
+cp -R "$TMP/r/skills/agentward-ai/sanitize" "$DEST/sanitize" &amp;&amp; rm -rf "$TMP" &amp;&amp; \
+echo "Installed sanitize (from openclaw/skills)"</code></pre>
+      </div>
+      <div class="grid">
+
+        <article class="card"><div class="card-head"><h3>VibeSec-Skill</h3><button class="copy-btn" data-copy="VibeSec-Skill">copy</button></div>
+          <p class="summary">Guardrails that stop Claude from shipping SQLi, XSS, or leaked secrets.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Side-project mode where Claude is shipping fast and you want SQLi and XSS flagged before the commit.</li>
+            <li>A junior dev using Claude Code who needs security training wheels without learning OWASP first.</li>
+            <li>A quick sanity check on any web app before you demo it publicly.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>Trail of Bits Security Skills</h3><button class="copy-btn" data-copy="Trail of Bits Security Skills">copy</button></div>
+          <p class="summary">CodeQL and Semgrep SAST, variant analysis, and fix verification.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Before adopting a new npm dependency with native code, running CodeQL and Semgrep variant analysis.</li>
+            <li>Post-audit verification that every reported finding is actually fixed by your patch, not just renamed.</li>
+            <li>A third-party assessment for a client with professional-grade rigor baked into the skill.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>ffuf_claude_skill</h3><button class="copy-btn" data-copy="ffuf_claude_skill">copy</button></div>
+          <p class="summary">Integrates the ffuf web fuzzer and analyzes results for vulnerabilities.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Bug bounty recon on a target's subdomains and paths to surface hidden endpoints.</li>
+            <li>Pre-launch audit of your own app, fuzzing for unintended exposures and misconfigured routes.</li>
+            <li>Fingerprinting a framework by response patterns for a defensive assessment.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>owasp-security</h3><button class="copy-btn" data-copy="owasp-security">copy</button></div>
+          <p class="summary">OWASP Top 10:2025, ASVS 5.0, and Agentic AI 2026 checklists.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Enforcing a PR gate that blocks merges failing OWASP Top 10 checks.</li>
+            <li>Preparing a codebase for a SOC 2 audit where OWASP-aligned control evidence matters.</li>
+            <li>Adding an Agentic AI 2026 checklist to your LLM app's deployment gate.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>varlock-claude-skill</h3><button class="copy-btn" data-copy="varlock-claude-skill">copy</button></div>
+          <p class="summary">Keeps secrets out of Claude sessions, terminals, logs, and commits.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Any repo with <code>.env</code> files where you are afraid a secret will end up in a Claude log or a commit.</li>
+            <li>Onboarding an entire team with "secrets can't leak through Claude" as a default posture.</li>
+            <li>A side project where you are pasting API keys into shells and want a safety net.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>sanitize</h3><button class="copy-btn" data-copy="sanitize">copy</button></div>
+          <p class="summary">Local PII redaction across 15 categories, zero dependencies.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Before pasting customer support transcripts into Claude for analysis, stripping PII locally first.</li>
+            <li>Scrubbing a CSV of user records before sharing with an intern or external collaborator.</li>
+            <li>Pre-processing error logs that might contain customer emails or IPs before they hit an AI tool.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>ironclaw-agent-guard</h3><button class="copy-btn" data-copy="ironclaw-agent-guard">copy</button></div>
+          <p class="summary">Prompt-injection defense, tool-call audit logs, and secret redaction.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>A production agent system where an attacker could send a prompt-injection via a form or email.</li>
+            <li>Audit requirement where every tool call must be logged with the triggering prompt preserved.</li>
+            <li>Multi-user agent product where you need both attack-surface reduction and compliance evidence.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>pypict-claude-skill</h3><button class="copy-btn" data-copy="pypict-claude-skill">copy</button></div>
+          <p class="summary">PICT pairwise combinatorial test case generation.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>A configuration matrix with 10 dimensions where exhaustive testing is 10^10 but pairwise is tractable.</li>
+            <li>Building a regression suite for a product with many optional features whose combinations explode.</li>
+            <li>QA for a CLI with 50 flags where you need coverage without a 50-factorial test case count.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>oiloil-ui-ux-guide</h3><button class="copy-btn" data-copy="oiloil-ui-ux-guide">copy</button></div>
+          <p class="summary">UI/UX review modes grounded in CRAP, HCI laws, and a modern minimal style.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Reviewing a teammate's PR for UI quality beyond "it compiles and looks fine."</li>
+            <li>Greenfielding a product surface with a principled UX baseline instead of copying last week's app.</li>
+            <li>Auditing an existing dashboard for layout, hierarchy, and interaction friction.</li>
+          </ul>
+        </article>
+
+        <article class="card"><div class="card-head"><h3>polaris-datainsight-doc-extract</h3><button class="copy-btn" data-copy="polaris-datainsight-doc-extract">copy</button></div>
+          <p class="summary">Structured extraction from DOCX, PPTX, XLSX, HWP, and HWPX, including Korean docs.</p>
+          <p class="use-cases-label">Use it when</p>
+          <ul class="use-cases">
+            <li>Extracting line-item data from Korean government PPTX reports for aggregate analysis.</li>
+            <li>Pulling tables from HWP and HWPX (Korean Hancom docs) that standard parsers can't read.</li>
+            <li>Batch-processing a mixed-format archive (DOCX, XLSX, HWP) where you need one consistent extraction pipeline.</li>
+          </ul>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="master-wrap" aria-label="One-command install">
+      <div class="install install-master">
+        <div class="install-head">
+          <span class="install-title">One command. All 90 skills. Paste into your terminal.</span>
+          <button class="copy-btn install-copy">copy</button>
+        </div>
+<pre><code>bash &lt;&lt;'SKILLS_ATLAS'
+DEST="$HOME/.claude/skills"
+PLUGINS="$HOME/.claude/plugins"
+A0="$HOME/agent-zero-skills"
+mkdir -p "$DEST" "$PLUGINS" "$A0/skills" "$A0/agents"
+
+sparse() {
+  local repo="$1" target="$2" stage="$3"; shift 3
+  local tmp; tmp=$(mktemp -d)
+  git clone --filter=blob:none --sparse --depth 1 "$repo" "$tmp/r" &gt;/dev/null 2&gt;&amp;1 &amp;&amp; \
+    (cd "$tmp/r" &amp;&amp; git sparse-checkout set "$@" &gt;/dev/null) &amp;&amp; \
+    cp -R "$tmp/r/$stage/." "$target/" &amp;&amp; echo "  ok: $(basename "$repo")"
+  rm -rf "$tmp"
+}
+cloneone() {
+  local url="$1" target="$2"
+  git clone --depth 1 "$url" "$target/$(basename "$url")" &gt;/dev/null 2&gt;&amp;1 \
+    &amp;&amp; echo "  ok: $(basename "$url")" || echo "  skip: $(basename "$url")"
+}
+
+echo "[1/9] anthropics/skills"
+sparse https://github.com/anthropics/skills "$DEST" skills \
+  skills/algorithmic-art skills/brand-guidelines skills/canvas-design skills/claude-api \
+  skills/doc-coauthoring skills/docx skills/frontend-design skills/internal-comms \
+  skills/mcp-builder skills/pdf
+
+echo "[2/9] obra/superpowers"
+sparse https://github.com/obra/superpowers "$DEST" skills \
+  skills/brainstorming skills/dispatching-parallel-agents skills/executing-plans \
+  skills/finishing-a-development-branch skills/receiving-code-review \
+  skills/requesting-code-review skills/subagent-driven-development \
+  skills/systematic-debugging skills/test-driven-development skills/using-git-worktrees
+
+echo "[3/9] wshobson/agents"
+sparse https://github.com/wshobson/agents "$PLUGINS" plugins \
+  plugins/accessibility-compliance plugins/agent-orchestration plugins/agent-teams \
+  plugins/api-scaffolding plugins/api-testing-observability plugins/application-performance \
+  plugins/backend-api-security plugins/backend-development plugins/blockchain-web3 \
+  plugins/cicd-automation
+
+echo "[4/9] davila7/claude-code-templates"
+sparse https://github.com/davila7/claude-code-templates "$DEST" cli-tool/components/skills \
+  cli-tool/components/skills/ai-maestro cli-tool/components/skills/ai-research \
+  cli-tool/components/skills/analytics cli-tool/components/skills/business-marketing \
+  cli-tool/components/skills/creative-design cli-tool/components/skills/database \
+  cli-tool/components/skills/design-to-code cli-tool/components/skills/enterprise-communication \
+  cli-tool/components/skills/productivity cli-tool/components/skills/sentry
+
+echo "[5/9] agent0ai/agent-zero"
+T=$(mktemp -d)
+git clone --filter=blob:none --sparse --depth 1 https://github.com/agent0ai/agent-zero "$T/r" &gt;/dev/null 2&gt;&amp;1
+(cd "$T/r" &amp;&amp; git sparse-checkout set \
+  skills/a0-create-plugin skills/a0-debug-plugin skills/a0-development \
+  skills/a0-manage-plugin skills/a0-plugin-router skills/a0-review-plugin \
+  skills/a0-setup-cli skills/create-skill agents/agent0 agents/researcher &gt;/dev/null)
+cp -R "$T/r/skills/." "$A0/skills/" 2&gt;/dev/null
+cp -R "$T/r/agents/." "$A0/agents/" 2&gt;/dev/null
+rm -rf "$T"; echo "  ok: agent-zero"
+
+echo "[6/9] hesreallyhim picks"
+for url in \
+  https://github.com/avifenesh/agentsys \
+  https://github.com/robertguss/claude-skills \
+  https://github.com/akin-ozer/cc-devops-skills \
+  https://github.com/undeadlist/claude-code-agents \
+  https://github.com/fcakyon/claude-codex-settings \
+  https://github.com/dreamiurg/claude-mountaineering-skills \
+  https://github.com/K-Dense-AI/claude-scientific-skills \
+  https://github.com/zarazhangrui/codebase-to-course \
+  https://github.com/skills-directory/skill-codex \
+  https://github.com/EveryInc/compound-engineering-plugin
+do cloneone "$url" "$DEST"; done
+
+echo "[7/9] ComposioHQ"
+T=$(mktemp -d)
+git clone --filter=blob:none --sparse --depth 1 https://github.com/ComposioHQ/awesome-claude-skills "$T/r" &gt;/dev/null 2&gt;&amp;1
+(cd "$T/r" &amp;&amp; git sparse-checkout set changelog-generator connect gmail-automation slack-automation github-automation linear-automation &gt;/dev/null)
+for s in changelog-generator connect gmail-automation slack-automation github-automation linear-automation; do
+  [ -d "$T/r/$s" ] &amp;&amp; cp -R "$T/r/$s" "$DEST/" &amp;&amp; echo "  ok: $s"
+done
+rm -rf "$T"
+for url in \
+  https://github.com/smerchek/claude-epub-skill \
+  https://github.com/zxkane/aws-skills \
+  https://github.com/bluzername/claude-code-terminal-title \
+  https://github.com/chrisvoncsefalvay/claude-d3js-skill
+do cloneone "$url" "$DEST"; done
+
+echo "[8/9] VoltAgent (team packs where sources are public)"
+for entry in \
+  "voltagent=https://github.com/VoltAgent/voltagent" \
+  "angular-skills=https://github.com/angular/skills" \
+  "courier-skills=https://github.com/trycourier/courier-skills" \
+  "callstack-skills=https://github.com/callstackincubator/skills" \
+  "better-auth=https://github.com/better-auth/better-auth"
+do
+  name="${entry%%=*}"; url="${entry#*=}"
+  git clone --depth 1 "$url" "$DEST/$name" &gt;/dev/null 2&gt;&amp;1 \
+    &amp;&amp; echo "  ok: $name" || echo "  skip: $name"
+done
+
+echo "[9/9] BehiSecc security packs"
+for url in \
+  https://github.com/BehiSecc/VibeSec-Skill \
+  https://github.com/trailofbits/skills \
+  https://github.com/jthack/ffuf_claude_skill \
+  https://github.com/agamm/claude-code-owasp \
+  https://github.com/wrsmith108/varlock-claude-skill \
+  https://github.com/wd041216-bit/ironclaw-agent-guard \
+  https://github.com/omkamal/pypict-claude-skill \
+  https://github.com/oil-oil/oiloil-ui-ux-guide \
+  https://github.com/jacob-g-park/polaris-datainsight-doc-extract
+do cloneone "$url" "$DEST"; done
+T=$(mktemp -d)
+git clone --filter=blob:none --sparse --depth 1 https://github.com/openclaw/skills "$T/r" &gt;/dev/null 2&gt;&amp;1
+(cd "$T/r" &amp;&amp; git sparse-checkout set skills/agentward-ai/sanitize &gt;/dev/null)
+cp -R "$T/r/skills/agentward-ai/sanitize" "$DEST/sanitize" 2&gt;/dev/null &amp;&amp; echo "  ok: sanitize"
+rm -rf "$T"
+
+echo ""
+echo "============================================================"
+echo "Install complete."
+echo "  Claude skills:  $DEST"
+echo "  Claude plugins: $PLUGINS"
+echo "  Agent Zero:     $A0"
+echo "============================================================"
+SKILLS_ATLAS</code></pre>
+      </div>
+      <p class="master-note">Paste into any <code>bash</code> or <code>zsh</code> shell. Requires <code>git</code>. Every clone is shallow and idempotent. Per-repo commands are listed above under each repo.</p>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div>Built as a single self-contained HTML file. Works offline. No external dependencies, no tracking, no fonts over the wire.</div>
+  <div>Press <kbd>/</kbd> to search. Press <kbd>Esc</kbd> to clear.</div>
+</footer>
+
+<script>
+(() => {
+  const q = document.getElementById('q');
+  const resultCount = document.getElementById('resultCount');
+  const themeBtn = document.getElementById('themeBtn');
+  const themeIcon = document.getElementById('themeIcon');
+  const html = document.documentElement;
+  const body = document.body;
+  const cards = Array.from(document.querySelectorAll('.card'));
+  const repos = Array.from(document.querySelectorAll('.repo'));
+  const chips = Array.from(document.querySelectorAll('#chips .chip'));
+
+  const savedTheme = localStorage.getItem('skills-atlas-theme');
+  if (savedTheme) html.setAttribute('data-theme', savedTheme);
+  const moonPath = '<path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a.5.5 0 0 0-.7-.5A9 9 0 1 0 20.5 15.2a.5.5 0 0 0-.5-.7Z" fill="currentColor"/>';
+  const sunPath = '<circle cx="12" cy="12" r="4" fill="currentColor"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4 7 17M17 7l1.4-1.4"/></g>';
+  const updateThemeIcon = () => {
+    themeIcon.innerHTML = html.getAttribute('data-theme') === 'light' ? sunPath : moonPath;
+  };
+  updateThemeIcon();
+  themeBtn.addEventListener('click', () => {
+    const next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('skills-atlas-theme', next);
+    updateThemeIcon();
+  });
+
+  const norm = s => (s || '').toLowerCase();
+  const storeOriginal = (el) => { if (!el.dataset.original) el.dataset.original = el.innerHTML; };
+  const restoreAll = () => {
+    for (const el of document.querySelectorAll('[data-original]')) el.innerHTML = el.dataset.original;
+  };
+  const highlightAll = (needle) => {
+    if (!needle) { restoreAll(); return; }
+    const re = new RegExp('(' + needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+    for (const card of cards) {
+      for (const el of card.querySelectorAll('h3, .summary, .use-cases li')) {
+        storeOriginal(el);
+        el.innerHTML = el.dataset.original.replace(re, '<mark>$1</mark>');
+      }
+    }
+  };
+
+  const doSearch = (term) => {
+    const needle = norm(term).trim();
+    if (needle) body.classList.add('searching'); else body.classList.remove('searching');
+    let matches = 0;
+    for (const card of cards) {
+      const text = norm(card.textContent);
+      const hit = !needle || text.includes(needle);
+      card.style.display = hit ? '' : 'none';
+      if (hit) matches++;
+    }
+    highlightAll(needle);
+    for (const section of repos) {
+      const hasCards = section.querySelectorAll('.card').length > 0;
+      const visible = Array.from(section.querySelectorAll('.card')).filter(c => c.style.display !== 'none').length;
+      section.style.display = (needle && hasCards && visible === 0) ? 'none' : '';
+    }
+    resultCount.textContent = needle ? (matches + ' match' + (matches === 1 ? '' : 'es')) : '';
+  };
+
+  q.addEventListener('input', e => doSearch(e.target.value));
+  q.addEventListener('keydown', e => { if (e.key === 'Escape') { q.value = ''; doSearch(''); q.blur(); } });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === '/' && document.activeElement !== q && !e.metaKey && !e.ctrlKey) {
+      e.preventDefault(); q.focus(); q.select();
+    }
+  });
+
+  for (const btn of document.querySelectorAll('.copy-btn')) {
+    btn.addEventListener('click', async () => {
+      try {
+        let text = btn.dataset.copy;
+        if (!text) {
+          const pre = btn.closest('.install')?.querySelector('pre');
+          if (pre) text = pre.textContent;
+        }
+        await navigator.clipboard.writeText(text || '');
+        const prev = btn.textContent;
+        btn.textContent = 'copied';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = prev; btn.classList.remove('copied'); }, 1400);
+      } catch (_) {
+        btn.textContent = 'press ctrl-c';
+        setTimeout(() => btn.textContent = 'copy', 1400);
+      }
+    });
+  }
+
+  const idToChip = new Map(chips.map(c => [c.getAttribute('href').slice(1), c]));
+  const observer = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (entry.isIntersecting) {
+        for (const c of chips) c.removeAttribute('aria-current');
+        const chip = idToChip.get(entry.target.id);
+        if (chip) {
+          chip.setAttribute('aria-current', 'true');
+          const container = document.getElementById('chips');
+          const rect = chip.getBoundingClientRect();
+          const cRect = container.getBoundingClientRect();
+          if (rect.left < cRect.left || rect.right > cRect.right) {
+            chip.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+          }
+        }
+      }
+    }
+  }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+  for (const r of repos) observer.observe(r);
+})();
+</script>
+</body>
+</html>
