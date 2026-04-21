@@ -655,17 +655,6 @@
         </div>
       </div>
       <p class="repo-blurb">The official Anthropic repo. The canonical source for document processing (docx, pdf, pptx, xlsx) and many core creative and developer skills.</p>
-      <div class="install">
-        <div class="install-head"><span class="install-title">Install these 10 skills</span><button class="copy-btn install-copy">copy</button></div>
-<pre><code>DEST=~/.claude/skills &amp;&amp; mkdir -p "$DEST" &amp;&amp; TMP=$(mktemp -d) &amp;&amp; \
-git clone --filter=blob:none --sparse --depth 1 https://github.com/anthropics/skills "$TMP/r" &amp;&amp; \
-(cd "$TMP/r" &amp;&amp; git sparse-checkout set \
-  skills/algorithmic-art skills/brand-guidelines skills/canvas-design skills/claude-api \
-  skills/doc-coauthoring skills/docx skills/frontend-design skills/internal-comms \
-  skills/mcp-builder skills/pdf) &amp;&amp; \
-cp -R "$TMP/r/skills/." "$DEST/" &amp;&amp; rm -rf "$TMP" &amp;&amp; \
-echo "Installed 10 skills from anthropics/skills into $DEST"</code></pre>
-      </div>
       <div class="grid">
 
         <article class="card"><div class="card-head"><h3>algorithmic-art</h3><button class="copy-btn" data-copy="algorithmic-art">copy</button></div>
@@ -784,18 +773,6 @@ echo "Installed 10 skills from anthropics/skills into $DEST"</code></pre>
         </div>
       </div>
       <p class="repo-blurb">Jesse Obra's opinionated agentic software development methodology. Workflow discipline, not building blocks.</p>
-      <div class="install">
-        <div class="install-head"><span class="install-title">Install these 10 skills</span><button class="copy-btn install-copy">copy</button></div>
-<pre><code>DEST=~/.claude/skills &amp;&amp; mkdir -p "$DEST" &amp;&amp; TMP=$(mktemp -d) &amp;&amp; \
-git clone --filter=blob:none --sparse --depth 1 https://github.com/obra/superpowers "$TMP/r" &amp;&amp; \
-(cd "$TMP/r" &amp;&amp; git sparse-checkout set \
-  skills/brainstorming skills/dispatching-parallel-agents skills/executing-plans \
-  skills/finishing-a-development-branch skills/receiving-code-review skills/requesting-code-review \
-  skills/subagent-driven-development skills/systematic-debugging skills/test-driven-development \
-  skills/using-git-worktrees) &amp;&amp; \
-cp -R "$TMP/r/skills/." "$DEST/" &amp;&amp; rm -rf "$TMP" &amp;&amp; \
-echo "Installed 10 skills from obra/superpowers into $DEST"</code></pre>
-      </div>
       <div class="grid">
 
         <article class="card"><div class="card-head"><h3>brainstorming</h3><button class="copy-btn" data-copy="brainstorming">copy</button></div>
@@ -914,18 +891,6 @@ echo "Installed 10 skills from obra/superpowers into $DEST"</code></pre>
         </div>
       </div>
       <p class="repo-blurb">Domain-specialist agent plugins. Bundles, not single-step skills, but each one loads a consistent set of subagents for a domain.</p>
-      <div class="install">
-        <div class="install-head"><span class="install-title">Install these 10 plugins</span><button class="copy-btn install-copy">copy</button></div>
-<pre><code>DEST=~/.claude/plugins &amp;&amp; mkdir -p "$DEST" &amp;&amp; TMP=$(mktemp -d) &amp;&amp; \
-git clone --filter=blob:none --sparse --depth 1 https://github.com/wshobson/agents "$TMP/r" &amp;&amp; \
-(cd "$TMP/r" &amp;&amp; git sparse-checkout set \
-  plugins/accessibility-compliance plugins/agent-orchestration plugins/agent-teams \
-  plugins/api-scaffolding plugins/api-testing-observability plugins/application-performance \
-  plugins/backend-api-security plugins/backend-development plugins/blockchain-web3 \
-  plugins/cicd-automation) &amp;&amp; \
-cp -R "$TMP/r/plugins/." "$DEST/" &amp;&amp; rm -rf "$TMP" &amp;&amp; \
-echo "Installed 10 plugins from wshobson/agents into $DEST"</code></pre>
-      </div>
       <div class="grid">
 
         <article class="card"><div class="card-head"><h3>accessibility-compliance</h3><button class="copy-btn" data-copy="accessibility-compliance">copy</button></div>
@@ -1043,19 +1008,6 @@ echo "Installed 10 plugins from wshobson/agents into $DEST"</code></pre>
         </div>
       </div>
       <p class="repo-blurb">A CLI-installable catalog of skill, agent, and command categories at aitmpl.com. Category bundles rather than single skills. Document-processing category dropped as redundant with anthropics/skills.</p>
-      <div class="install">
-        <div class="install-head"><span class="install-title">Install these 10 skill categories</span><button class="copy-btn install-copy">copy</button></div>
-<pre><code>DEST=~/.claude/skills &amp;&amp; mkdir -p "$DEST" &amp;&amp; TMP=$(mktemp -d) &amp;&amp; \
-git clone --filter=blob:none --sparse --depth 1 https://github.com/davila7/claude-code-templates "$TMP/r" &amp;&amp; \
-(cd "$TMP/r" &amp;&amp; git sparse-checkout set \
-  cli-tool/components/skills/ai-maestro cli-tool/components/skills/ai-research \
-  cli-tool/components/skills/analytics cli-tool/components/skills/business-marketing \
-  cli-tool/components/skills/creative-design cli-tool/components/skills/database \
-  cli-tool/components/skills/design-to-code cli-tool/components/skills/enterprise-communication \
-  cli-tool/components/skills/productivity cli-tool/components/skills/sentry) &amp;&amp; \
-cp -R "$TMP/r/cli-tool/components/skills/." "$DEST/" &amp;&amp; rm -rf "$TMP" &amp;&amp; \
-echo "Installed 10 skill categories from davila7 into $DEST"</code></pre>
-      </div>
       <div class="grid">
 
         <article class="card"><div class="card-head"><h3>ai-maestro</h3><button class="copy-btn" data-copy="ai-maestro">copy</button></div>
@@ -1173,18 +1125,6 @@ echo "Installed 10 skill categories from davila7 into $DEST"</code></pre>
         </div>
       </div>
       <p class="repo-blurb">Skills and agent personas bundled with the Agent Zero framework. Most "skills" here are about operating the A0 plugin system itself.</p>
-      <div class="install">
-        <div class="install-head"><span class="install-title">Install these 8 skills + 2 agents</span><button class="copy-btn install-copy">copy</button></div>
-<pre><code>DEST=~/agent-zero-skills &amp;&amp; mkdir -p "$DEST/skills" "$DEST/agents" &amp;&amp; TMP=$(mktemp -d) &amp;&amp; \
-git clone --filter=blob:none --sparse --depth 1 https://github.com/agent0ai/agent-zero "$TMP/r" &amp;&amp; \
-(cd "$TMP/r" &amp;&amp; git sparse-checkout set \
-  skills/a0-create-plugin skills/a0-debug-plugin skills/a0-development \
-  skills/a0-manage-plugin skills/a0-plugin-router skills/a0-review-plugin \
-  skills/a0-setup-cli skills/create-skill \
-  agents/agent0 agents/researcher) &amp;&amp; \
-cp -R "$TMP/r/skills/." "$DEST/skills/" &amp;&amp; cp -R "$TMP/r/agents/." "$DEST/agents/" &amp;&amp; rm -rf "$TMP" &amp;&amp; \
-echo "Installed 8 A0 skills + 2 A0 agents into $DEST"</code></pre>
-      </div>
       <div class="grid">
 
         <article class="card"><div class="card-head"><h3>a0-create-plugin</h3><button class="copy-btn" data-copy="a0-create-plugin">copy</button></div>
@@ -1302,23 +1242,6 @@ echo "Installed 8 A0 skills + 2 A0 agents into $DEST"</code></pre>
         </div>
       </div>
       <p class="repo-blurb">The curator's picks in the Agent Skills section. Each entry is a full external skill pack worth installing on its own.</p>
-      <div class="install">
-        <div class="install-head"><span class="install-title">Install these 10 external skill packs</span><button class="copy-btn install-copy">copy</button></div>
-<pre><code>DEST=~/.claude/skills &amp;&amp; mkdir -p "$DEST" &amp;&amp; \
-for url in \
-  https://github.com/avifenesh/agentsys \
-  https://github.com/robertguss/claude-skills \
-  https://github.com/akin-ozer/cc-devops-skills \
-  https://github.com/undeadlist/claude-code-agents \
-  https://github.com/fcakyon/claude-codex-settings \
-  https://github.com/dreamiurg/claude-mountaineering-skills \
-  https://github.com/K-Dense-AI/claude-scientific-skills \
-  https://github.com/zarazhangrui/codebase-to-course \
-  https://github.com/skills-directory/skill-codex \
-  https://github.com/EveryInc/compound-engineering-plugin; do
-  git clone --depth 1 "$url" "$DEST/$(basename "$url")" &amp;&amp; echo "Installed $(basename "$url")"
-done</code></pre>
-      </div>
       <div class="grid">
 
         <article class="card"><div class="card-head"><h3>AgentSys</h3><button class="copy-btn" data-copy="AgentSys">copy</button></div>
@@ -1436,23 +1359,6 @@ done</code></pre>
         </div>
       </div>
       <p class="repo-blurb">The five anthropics-duplicate entries are dropped. In their place, the five most unique Composio picks plus core app-automation skills from their ecosystem.</p>
-      <div class="install">
-        <div class="install-head"><span class="install-title">Install these 10 skills (6 in-repo + 4 external)</span><button class="copy-btn install-copy">copy</button></div>
-<pre><code>DEST=~/.claude/skills &amp;&amp; mkdir -p "$DEST" &amp;&amp; TMP=$(mktemp -d) &amp;&amp; \
-git clone --filter=blob:none --sparse --depth 1 https://github.com/ComposioHQ/awesome-claude-skills "$TMP/r" &amp;&amp; \
-(cd "$TMP/r" &amp;&amp; git sparse-checkout set \
-  changelog-generator connect gmail-automation slack-automation github-automation linear-automation) &amp;&amp; \
-for s in changelog-generator connect gmail-automation slack-automation github-automation linear-automation; do \
-  cp -R "$TMP/r/$s" "$DEST/"; \
-done &amp;&amp; rm -rf "$TMP" &amp;&amp; \
-for url in \
-  https://github.com/smerchek/claude-epub-skill \
-  https://github.com/zxkane/aws-skills \
-  https://github.com/bluzername/claude-code-terminal-title \
-  https://github.com/chrisvoncsefalvay/claude-d3js-skill; do
-  git clone --depth 1 "$url" "$DEST/$(basename "$url")"
-done &amp;&amp; echo "Installed 10 Composio-curated skills into $DEST"</code></pre>
-      </div>
       <div class="grid">
 
         <article class="card"><div class="card-head"><h3>markdown-to-epub</h3><button class="copy-btn" data-copy="markdown-to-epub">copy</button></div>
@@ -1570,21 +1476,6 @@ done &amp;&amp; echo "Installed 10 Composio-curated skills into $DEST"</code></p
         </div>
       </div>
       <p class="repo-blurb">Skill packs published by official product teams. The Composio pack is dropped since it overlaps with ComposioHQ's own repo.</p>
-      <div class="install">
-        <div class="install-head"><span class="install-title">Install these team skill packs (where source repos are public)</span><button class="copy-btn install-copy">copy</button></div>
-<pre><code># VoltAgent lists skills via officialskills.sh. Below clones each team's public source repo.
-# For supabase, google-gemini, stripe, tinybird, terraform: see https://github.com/VoltAgent/awesome-agent-skills
-DEST=~/.claude/skills &amp;&amp; mkdir -p "$DEST" &amp;&amp; \
-for entry in \
-  "voltagent=https://github.com/VoltAgent/voltagent" \
-  "angular-skills=https://github.com/angular/skills" \
-  "courier-skills=https://github.com/trycourier/courier-skills" \
-  "callstack-skills=https://github.com/callstackincubator/skills" \
-  "better-auth=https://github.com/better-auth/better-auth"; do
-  name="${entry%%=*}"; url="${entry#*=}"
-  git clone --depth 1 "$url" "$DEST/$name" 2&gt;/dev/null &amp;&amp; echo "Installed $name" || echo "Skipped $name"
-done</code></pre>
-      </div>
       <div class="grid">
 
         <article class="card"><div class="card-head"><h3>voltagent</h3><button class="copy-btn" data-copy="voltagent">copy</button></div>
@@ -1720,27 +1611,6 @@ done</code></pre>
         </div>
       </div>
       <p class="repo-blurb">Security-leaning curation. Document and dev overlaps dropped. The ten kept are security-focused entries that do not appear elsewhere above.</p>
-      <div class="install">
-        <div class="install-head"><span class="install-title">Install these 10 security skills</span><button class="copy-btn install-copy">copy</button></div>
-<pre><code>DEST=~/.claude/skills &amp;&amp; mkdir -p "$DEST" &amp;&amp; \
-for url in \
-  https://github.com/BehiSecc/VibeSec-Skill \
-  https://github.com/trailofbits/skills \
-  https://github.com/jthack/ffuf_claude_skill \
-  https://github.com/agamm/claude-code-owasp \
-  https://github.com/wrsmith108/varlock-claude-skill \
-  https://github.com/wd041216-bit/ironclaw-agent-guard \
-  https://github.com/omkamal/pypict-claude-skill \
-  https://github.com/oil-oil/oiloil-ui-ux-guide \
-  https://github.com/jacob-g-park/polaris-datainsight-doc-extract; do
-  git clone --depth 1 "$url" "$DEST/$(basename "$url")" &amp;&amp; echo "Installed $(basename "$url")"
-done &amp;&amp; \
-TMP=$(mktemp -d) &amp;&amp; \
-git clone --filter=blob:none --sparse --depth 1 https://github.com/openclaw/skills "$TMP/r" &amp;&amp; \
-(cd "$TMP/r" &amp;&amp; git sparse-checkout set skills/agentward-ai/sanitize) &amp;&amp; \
-cp -R "$TMP/r/skills/agentward-ai/sanitize" "$DEST/sanitize" &amp;&amp; rm -rf "$TMP" &amp;&amp; \
-echo "Installed sanitize (from openclaw/skills)"</code></pre>
-      </div>
       <div class="grid">
 
         <article class="card"><div class="card-head"><h3>VibeSec-Skill</h3><button class="copy-btn" data-copy="VibeSec-Skill">copy</button></div>
